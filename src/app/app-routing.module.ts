@@ -52,7 +52,7 @@ const routes: Routes = [
         path: 'general',
         loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
       },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'tableau-de-bord', pathMatch: 'full' },
       {
         path: 'tableau-de-bord',
         loadChildren: () => import('./views/pages/tableau-de-bord/tableau-de-bord.module').then(m => m.TableauDeBordModule)
