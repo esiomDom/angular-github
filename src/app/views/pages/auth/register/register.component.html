@@ -1,0 +1,46 @@
+<div class="auth-form-wrapper">
+
+  <h2 class="text-muted fw-normal mb-4 text-center text-primary">INSCRIPTION</h2>
+  <form class="forms-sample">
+    <div class="mb-3">
+      <label for="exampleInputUsername1" class="form-label">Raison socilae</label>
+      <input type="text" class="form-control" id="exampleInputUsername1" autocomplete="GIE Heveq"
+        placeholder="Username">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email de l'entreprise</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="gie-hevea@gmail.com">
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Numero de téléphone de l'entreprise</label>
+      <input type="phone" class="form-control" id="exampleInputEmail1" placeholder="0707070708">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password"
+        placeholder="Password">
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Confirmation de mot de passe</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password"
+        placeholder="Password">
+    </div>
+    <div class="form-check mb-3">
+      <input type="checkbox" class="form-check-input" id="authCheck">
+      <label class="form-check-label" for="authCheck">
+        J'accepte <a routerLink=".">les termes & conditions d'utilisation</a>
+      </label>
+    </div>
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">INSCRIPTION</button>
+      <!-- <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+        <i class="feather icon-twitter btn-icon-prepend"></i>
+        Sign up with twitter
+      </button> -->
+    </div>
+    <a routerLink="/auth/login" class="d-block mt-3 text-muted">Déjà Inscrit? <span
+        class="text-primary">Connectez-vous</span></a>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+<div class="auth-form-wrapper px-2 py-0">
+  <h2 class="text-muted fw-normal mb-4 text-center text-primary">CONNEXION</h2>
+  <form class="forms-sample">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email </label>
+      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value="admin@demo.com">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password"
+        placeholder="Password" value="12345678">
+    </div>
+    <div class="form-check mb-3">
+      <input type="checkbox" class="form-check-input" id="authCheck">
+      <label class="form-check-label" for="authCheck">
+        Se souvenir de moi
+      </label>
+    </div>
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onLoggedin($event)">CONNEXION</button>
+    </div>
+    <a routerLink="/auth/register" class="d-block mt-3 text-muted">vous n'avez pas de compte? <span
+        class="text-primary">Inscription</span></a>
+  </form>
+</div>
