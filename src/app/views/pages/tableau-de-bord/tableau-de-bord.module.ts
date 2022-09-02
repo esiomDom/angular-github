@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TableauDeBordRoutingModule } from './tableau-de-bord-routing.module';
 import { TableauDeBordComponent } from './tableau-de-bord.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeahterIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { ArchwizardModule } from 'angular-archwizard';
 
@@ -16,6 +16,7 @@ import { ArchwizardModule } from 'angular-archwizard';
     CommonModule,
     TableauDeBordRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     FeahterIconModule,
     ArchwizardModule
   ]
