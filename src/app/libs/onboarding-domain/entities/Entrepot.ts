@@ -1,6 +1,6 @@
 import { Localisation } from './localisation';
 
 export interface Entrepot {
-  capacite: string;
+  capacite: number;
   localisation: Localisation
 }

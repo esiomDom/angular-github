@@ -1,8 +1,0 @@
-{
-  "onboarding": {
-    "kyc": "/kyc"
-  },
-  "sfs": {
-    "fileUpload": "uploadfile"
-  }
-}

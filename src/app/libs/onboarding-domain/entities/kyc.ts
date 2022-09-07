@@ -5,21 +5,21 @@ import { Localisation } from "./localisation";
 import { Entrepot } from "./Entrepot";
 
 export enum FiliereIntervention {
-  cacao,
-  karite,
-  hevea,
-  cajout
+  cacao = "Cacao",
+  karite = "Karité",
+  hevea = "Hévéa",
+  cajou = "Cajou"
 }
 
 export enum StatutJuridique {
-  sarl,
-  sa,
-  snc,
-  scs,
-  coop,
-  ca,
-  scoops,
-  gie
+  sarl = "SARL",
+  sa = "SA",
+  snc = "SNC",
+  scs = 'SCS',
+  coop = 'COOP',
+  ca = 'CA',
+  scoops = 'SCOOPS',
+  gie = 'GIE'
 }
 
 
@@ -28,19 +28,19 @@ export interface Kyc {
   customer: Customer;
   abreviation: string;
   adresse_postale: string;
-  region_implementation: Localisation[];
+  region_implantation: Localisation[];
   siege_social: Localisation;
   site_internet: string;
-  filier_intervention: FiliereIntervention[];
+  filiere_intervention: FiliereIntervention[];
   date_creation_entite: string;
   statut_juridique: StatutJuridique;
-  capital_social: string;
+  capital_social: number;
   dfe: Files;
   rccm: Files;
-  license_exploitation: string[];
+  licence_exploitation: string[];
   certificats: string[];
   actionnaires: Member[];
-  respoinsable: Member[];
+  responsables: Member[];
   organigramme: string;
   entrepots: Entrepot[];
 }

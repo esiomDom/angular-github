@@ -1,7 +1,7 @@
 
 
 export interface Customer {
-  raisonSocial: string;
+  raison_social: string;
   email: string;
   numero: string;
 }

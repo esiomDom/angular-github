@@ -1,10 +1,22 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import urlList from 'src/app/core/utils/service-list';
+import { environment } from 'src/environments/environment';
+import { Kyc } from '../entities/kyc';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnboardingService {
 
-constructor() { }
+  constructor(private http: HttpClient) { }
+
+  createSampleKyc(payload: Kyc): Observable<any> {
+    const url = environment.apiUrl + urlList.onboarding.kyc;
+    console.log(url);
+    return this.http.post(url, payload)
+  }
+
 
 }

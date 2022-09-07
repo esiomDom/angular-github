@@ -1,6 +1,7 @@
 export interface Member {
   nom_prenom: string;
   telephone: string;
-  pourcentage: string;
-  date_prise_position: Date;
+  pourcentage?: number;
+  position?: string;
+  date_prise_position: string;
 }

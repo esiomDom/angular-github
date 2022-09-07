@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
+import { OnboardingDomainModule } from 'src/app/libs/onboarding-domain/onboarding-domain.module';
 
 const routes: Routes = [
   {
@@ -28,9 +29,14 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    AuthComponent
+  ],
   imports: [
     CommonModule,
+    OnboardingDomainModule,
     RouterModule.forChild(routes)
   ]
 })

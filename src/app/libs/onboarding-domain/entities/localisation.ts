@@ -1,9 +1,9 @@
 export enum Ville {
-  Abidjan
+  abidjan = 'abidjan'
 }
 
 export enum Commune {
-  Cocody
+  cocody = 'cocody'
 }
 
 export interface Localisation {
