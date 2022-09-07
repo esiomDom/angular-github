@@ -1,3 +1,4 @@
+import { OnboardingDomainModule } from './../../../libs/onboarding-domain/onboarding-domain.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -18,7 +19,8 @@ import { ArchwizardModule } from 'angular-archwizard';
     FormsModule,
     ReactiveFormsModule,
     FeahterIconModule,
-    ArchwizardModule
+    ArchwizardModule,
+    OnboardingDomainModule
   ]
 })
 export class TableauDeBordModule { }

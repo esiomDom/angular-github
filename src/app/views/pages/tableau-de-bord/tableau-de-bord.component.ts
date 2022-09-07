@@ -1,3 +1,4 @@
+import { FiliereIntervention, TypeEntite } from './../../../libs/onboarding-domain/entities/kyc';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
@@ -8,13 +9,14 @@ import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 })
 export class TableauDeBordComponent implements OnInit {
   step1Form: FormGroup;
-
-
   isStep1FormSubmitted: Boolean;
+
+  filiereIntervention: string[] = Object.values(FiliereIntervention)
+  typeEntite: string[] = Object.values(TypeEntite)
 
 
   constructor(public formBuilder: FormBuilder) {
-
+    console.log(this.filiereIntervention);
 
   }
 

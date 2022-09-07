@@ -4,6 +4,12 @@ import { Files } from "./files";
 import { Localisation } from "./localisation";
 import { Entrepot } from "./Entrepot";
 
+export enum TypeEntite {
+  cooperative = "cooperative",
+  exportateur = "exportateur",
+  transformateur = "transformateur",
+}
+
 export enum FiliereIntervention {
   cacao = "Cacao",
   karite = "Karité",
@@ -25,6 +31,7 @@ export enum StatutJuridique {
 
 
 export interface Kyc {
+  type_entity: TypeEntite;
   customer: Customer;
   abreviation: string;
   adresse_postale: string;

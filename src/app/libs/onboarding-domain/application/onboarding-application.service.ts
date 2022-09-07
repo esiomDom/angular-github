@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FiliereIntervention, Kyc, StatutJuridique } from '../entities/kyc';
+import { FiliereIntervention, Kyc, StatutJuridique, TypeEntite } from '../entities/kyc';
 import { Commune, Ville } from '../entities/localisation';
 import { OnboardingService } from '../infrastructure/onboarding.service';
 
@@ -12,6 +12,7 @@ export class OnboardingApplicationService {
 
   private generateSampleKycPayload(): Kyc {
     return {
+      "type_entity": TypeEntite.cooperative,
       "customer": {
         "raison_social": "string",
         "email": "user@example.com",
