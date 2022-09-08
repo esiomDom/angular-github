@@ -2,6 +2,7 @@ import { FiliereIntervention, TypeEntite } from './../../../libs/onboarding-doma
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { from } from 'rxjs';
 @Component({
   selector: 'app-tableau-de-bord',
   templateUrl: './tableau-de-bord.component.html',
@@ -30,14 +31,31 @@ export class TableauDeBordComponent implements OnInit {
 
 
   initStep1Form = () => {
-    // typeEntite: [''],
-    // denominationEntite: [''],
-    // abreviation: [''],
-    // filiereIntervention: [''],
-    // villeRegionImplantation: [''],
-    // test: new FormControl(''),
     this.step1Form = this.formBuilder.group({
-
+      typeEntite: new FormControl(''),
+      denomination: new FormControl(''),
+      raisonSocial: new FormControl(''),
+      email: new FormControl(''),
+      telephone: new FormControl(''),
+      adressePostal: new FormControl(''),
+      villeRegionImplementation: new FormControl(''),
+      communeRegionImplementation: new FormControl(''),
+      detailRegionImplementation: new FormControl(''),
+      villeSiegeSocial: new FormControl(''),
+      communeSiegeSocial: new FormControl(''),
+      detailSiegeSocial: new FormControl(''),
+      siteInternet: new FormControl(''),
+      filiereIntervention: new FormControl([]),
+      dateCreationEntite: new FormControl(''),
+      statutJuridique: new FormControl(''),
+      capitalSocial: new FormControl(''),
+      numeroDfe: new FormControl(''),
+      fichierDfe: new FormControl(''),
+      numeroRccm: new FormControl(''),
+      fichierRccm: new FormControl(''),
+      licenseExploitation: new FormControl([]),
+      certificats: new FormControl([]),
+      fichierOrganigramme: new FormControl(''),
       entrepots: this.formBuilder.array([]),
       actionnaires: this.formBuilder.array([]),
       responsables: this.formBuilder.array([])
@@ -56,7 +74,7 @@ export class TableauDeBordComponent implements OnInit {
     return this.step1Form.get('entrepots') as FormArray;
   }
 
-  newEntrepot(): FormGroup{
+  newEntrepot(): FormGroup {
     return this.formBuilder.group({
       capacite: '',
       ville: '',
