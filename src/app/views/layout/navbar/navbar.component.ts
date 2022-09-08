@@ -17,10 +17,10 @@ export class NavbarComponent implements OnInit {
   /**
   * Fixed header menu on scroll
   */
-  @HostListener('window:scroll', ['$event']) getScrollHeight() {    
+  @HostListener('window:scroll', ['$event']) getScrollHeight() {
     if (window.matchMedia('(min-width: 992px)').matches) {
       let header: HTMLElement = document.querySelector('.horizontal-menu') as HTMLElement;
-      if(window.pageYOffset >= 60) {
+      if (window.pageYOffset >= 60) {
         header.parentElement!.classList.add('fixed-on-scroll')
       } else {
         header.parentElement!.classList.remove('fixed-on-scroll')
@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
   }
 
   constructor(
-    @Inject(DOCUMENT) private document: Document, 
+    @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router
   ) { }
@@ -63,6 +63,8 @@ export class NavbarComponent implements OnInit {
   onLogout(e: Event) {
     e.preventDefault();
     localStorage.removeItem('isLoggedin');
+    localStorage.removeItem('kyc');
+    localStorage.removeItem('currentKycData');
 
     if (!localStorage.getItem('isLoggedin')) {
       this.router.navigate(['/auth/login']);

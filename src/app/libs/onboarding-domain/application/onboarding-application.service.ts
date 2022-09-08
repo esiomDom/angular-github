@@ -126,11 +126,11 @@ export class OnboardingApplicationService {
       "certificats": [
         "http://0.0.0.0:9003/docs"
       ],
-      "actionnaires": [...data.step3Group.actionnaires],
-      "responsables": [...data.step3Group.responsables],
+      "actionnaires": [...data.step3Group.actionnaires.map((actionnaire: any) => this.parseActionnaireFormDataToDtoActionnaireData(actionnaire))],
+      "responsables": [...data.step3Group.responsables.map((responsable: any) => this.parseResponsabeFormDataToDtoResponsabeData(responsable))],
       "organigramme": "http://0.0.0.0:9003/docs",
       "entrepots": [
-        data.step1Group.entrepots.map((entrepots: any) => this.formatEntrepotData(entrepots))
+        ...data.step1Group.entrepots.map((entrepots: any) => this.parseEntrepotFormDataToDtoEntrepotData(entrepots))
       ]
     }
   }
@@ -156,7 +156,9 @@ export class OnboardingApplicationService {
         "dateCreationEntite": dto.date_creation_entite,
         "statutJuridique": [dto.statut_juridique],
         "capitalSocial": dto.capital_social.toString(),
-        "entrepots": [...dto.entrepots],
+        "entrepots": [...dto.entrepots.map((entrepots: any) => {
+          return this.parseEntrepotDtoToFormData(entrepots);
+        })],
       },
       "step2Group": {
         "numeroDfe": dto.dfe.numero,
@@ -168,20 +170,66 @@ export class OnboardingApplicationService {
         "fichierOrganigramme": dto.organigramme
       },
       "step3Group": {
-        "actionnaires": [...dto.actionnaires],
-        "responsables": [...dto.responsables]
+        "actionnaires": [...dto.actionnaires.map((actionnaire: any) => this.parseDtoActionnaireDataToActionnaireFormData(actionnaire))],
+        "responsables": [...dto.responsables.map((responsable: any) => this.parseDtoResponsabeDataToResponsabeFormData(responsable))]
       }
     }
   }
 
-  private formatEntrepotData(dataEntrepotForm: any): any {
+  private parseDtoActionnaireDataToActionnaireFormData(dto: any): any {
     return {
-      capacite: dataEntrepotForm.capacite,
+      nomPrenom: dto.nom_prenom,
+      telephone: dto.telephone,
+      pourcentage: dto.pourcentage,
+      datePrisePosition: dto.date_prise_position
+    }
+  }
+
+  private parseDtoResponsabeDataToResponsabeFormData(dto: any): any {
+    return {
+      nomPrenom: dto.nom_prenom,
+      telephone: dto.telephone,
+      position: dto.position,
+      datePrisePosition: dto.date_prise_position
+    }
+  }
+
+  private parseActionnaireFormDataToDtoActionnaireData(member: any): any {
+    return {
+      nom_prenom: member.nomPrenom,
+      telephone: member.telephone,
+      pourcentage: member.pourcentage,
+      date_prise_position: member.datePrisePosition
+    }
+  }
+
+  private parseResponsabeFormDataToDtoResponsabeData(member: any): any {
+    return {
+      nom_prenom: member.nomPrenom,
+      telephone: member.telephone,
+      position: member.position,
+      date_prise_position: member.datePrisePosition
+    }
+  }
+
+
+  private parseEntrepotFormDataToDtoEntrepotData(dataEntrepotForm: any): any {
+    return {
+      capacite: parseInt(dataEntrepotForm.capacite),
       localisation: {
         ville: dataEntrepotForm.ville,
         commune: dataEntrepotForm.commune,
         details: dataEntrepotForm.details
       }
+    }
+  }
+
+  private parseEntrepotDtoToFormData(dto: any): any {
+    return {
+      capacite: dto.capacite,
+      ville: dto.localisation.ville,
+      commune: dto.localisation.commune,
+      details: dto.localisation.details
     }
   }
 
@@ -193,7 +241,7 @@ export class OnboardingApplicationService {
     })
   }
 
-  patchKyc(payload: any, id:any) {
+  patchKyc(payload: any, id: any) {
     console.log('patch', this.parseFromDataToDto(payload));
     const parsedKyc = this.parseFromDataToDto(payload);
     this.onboardingService.pacthKyc(id, parsedKyc).subscribe((res) => {
@@ -204,6 +252,7 @@ export class OnboardingApplicationService {
   getCurrentKyc(id: any) {
     this.onboardingService.getKyc(id).subscribe((res) => {
       const formData = this.parseFromDtoToFormData(res);
+      console.log(formData);
       localStorage.setItem('currentKycData', JSON.stringify(formData));
     })
   }

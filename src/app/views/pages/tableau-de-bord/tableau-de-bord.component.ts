@@ -29,7 +29,7 @@ export class TableauDeBordComponent implements OnInit {
 
   }
 
-  async ngOnInit()   {
+  async ngOnInit() {
     await this.initStep1Form()
     await this.addEntrepot()
     await this.addActionnaires()
@@ -109,6 +109,15 @@ export class TableauDeBordComponent implements OnInit {
     })
   }
 
+  newResponsable(): FormGroup {
+    return this.formBuilder.group({
+      nomPrenom: '',
+      telephone: '',
+      position: '',
+      datePrisePosition: ''
+    })
+  }
+
   addActionnaires() {
     if (this.actionnaires.length < 5) {
       const actionnairesForm = this.newActionnaire();
@@ -120,7 +129,7 @@ export class TableauDeBordComponent implements OnInit {
 
   addResponsable = () => {
     if (this.responsables.length < 5) {
-      const responsableForm = this.newActionnaire();
+      const responsableForm = this.newResponsable();
       this.responsables.push(responsableForm)
     } else {
       alert('limite de responsables atteintes')
