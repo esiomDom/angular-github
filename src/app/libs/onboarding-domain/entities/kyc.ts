@@ -32,6 +32,7 @@ export enum StatutJuridique {
 
 export interface Kyc {
   type_entity: TypeEntite;
+  denomination: string;
   customer: Customer;
   abreviation: string;
   adresse_postale: string;

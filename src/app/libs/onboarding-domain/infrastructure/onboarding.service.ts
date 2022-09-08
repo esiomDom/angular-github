@@ -14,8 +14,18 @@ export class OnboardingService {
 
   createSampleKyc(payload: Kyc): Observable<any> {
     const url = environment.apiUrl + urlList.onboarding.kyc;
-    console.log(url);
+
     return this.http.post(url, payload)
+  }
+
+  getKyc(id: string): Observable<any> {
+    const url = environment.apiUrl + urlList.onboarding.kyc + `/${id}`;
+    return this.http.get(url);
+  }
+
+  pacthKyc(id: string, payload: Kyc): Observable<any> {
+    const url = environment.apiUrl + urlList.onboarding.kyc + `/${id}`;
+    return this.http.patch(url, payload);
   }
 
 
