@@ -63,8 +63,6 @@ export class NavbarComponent implements OnInit {
   onLogout(e: Event) {
     e.preventDefault();
     localStorage.removeItem('isLoggedin');
-    localStorage.removeItem('kyc');
-    localStorage.removeItem('currentKycData');
 
     if (!localStorage.getItem('isLoggedin')) {
       this.router.navigate(['/auth/login']);

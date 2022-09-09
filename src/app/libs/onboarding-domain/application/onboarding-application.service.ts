@@ -1,51 +1,57 @@
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { FiliereIntervention, Kyc, StatutJuridique, TypeEntite } from '../entities/kyc';
 import { Commune, Ville } from '../entities/localisation';
 import { OnboardingService } from '../infrastructure/onboarding.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnboardingApplicationService {
 
-  constructor(private onboardingService: OnboardingService) { }
+  public kycData = new BehaviorSubject<string>("");
+  public uploadedFile = new BehaviorSubject<string>("");
+
+
+  constructor(private onboardingService: OnboardingService, private router: Router) { }
 
   private generateSampleKycPayload(): Kyc {
     return {
       "type_entity": TypeEntite.cooperative,
-      "denomination": "test denomination",
+      "denomination": "GIE HEVEA",
       "customer": {
-        "raison_social": "string",
-        "email": "user@example.com",
-        "numero": "string"
+        "raison_social": "GIE HEVEA",
+        "email": "gie-hevea@gmail.com",
+        "numero": "0707070707"
       },
-      "abreviation": "string",
-      "adresse_postale": "string",
+      "abreviation": "HEVEA",
+      "adresse_postale": "Daloa",
       "region_implantation": [
         {
           "ville": Ville.abidjan,
           "commune": Commune.cocody,
-          "details": "string"
+          "details": "detail region d'implementation"
         }
       ],
       "siege_social": {
         "ville": Ville.abidjan,
         "commune": Commune.cocody,
-        "details": "string"
+        "details": "detail siege social"
       },
-      "site_internet": "string",
+      "site_internet": "http://www.giehevea.com",
       "filiere_intervention": [
-        FiliereIntervention.cacao
+        FiliereIntervention.hevea
       ],
-      "date_creation_entite": "string",
+      "date_creation_entite": "2022-05-27",
       "statut_juridique": StatutJuridique.sarl,
-      "capital_social": 0,
+      "capital_social": 20000000,
       "dfe": {
-        "numero": "string",
+        "numero": "547877978",
         "file": "http://0.0.0.0:9003/docs"
       },
       "rccm": {
-        "numero": "string",
+        "numero": "547877978",
         "file": "http://0.0.0.0:9003/docs"
       },
       "licence_exploitation": [
@@ -56,28 +62,29 @@ export class OnboardingApplicationService {
       ],
       "actionnaires": [
         {
-          "nom_prenom": "string",
-          "telephone": "string",
-          "pourcentage": 0,
+          "nom_prenom": "Seydou Kone",
+          "telephone": "07070707070",
+          "pourcentage": 75,
           "date_prise_position": "2022-09-07T14:32:48.803Z"
         }
       ],
       "responsables": [
         {
-          "nom_prenom": "string",
-          "telephone": "string",
-          "position": "string",
+          "nom_prenom": "Meite Ibrahim Stephane",
+          "telephone": "0707070707",
+          "position": "Chef de projet",
           "date_prise_position": "2022-09-07T14:32:48.803Z"
         }
       ],
       "organigramme": "http://0.0.0.0:9003/docs",
+      "status": "http://0.0.0.0:9003/docs",
       "entrepots": [
         {
-          "capacite": 0,
+          "capacite": 8000,
           "localisation": {
             "ville": Ville.abidjan,
             "commune": Commune.cocody,
-            "details": "string"
+            "details": "detail entrepots"
           }
         }
       ]
@@ -114,27 +121,28 @@ export class OnboardingApplicationService {
       "capital_social": parseInt(data.step1Group.capitalSocial),
       "dfe": {
         "numero": data.step2Group.numeroDfe,
-        "file": "http://0.0.0.0:9003/docs"
+        "file": data.step2Group.fichierDfe
       },
       "rccm": {
         "numero": data.step2Group.numeroRccm,
-        "file": "http://0.0.0.0:9003/docs"
+        "file": data.step2Group.fichierRccm
       },
       "licence_exploitation": [
-        "http://0.0.0.0:9003/docs"
+        data.step2Group.licenseExploitation
       ],
       "certificats": [
-        "http://0.0.0.0:9003/docs"
+        data.step2Group.certificats
       ],
       "actionnaires": [...data.step3Group.actionnaires.map((actionnaire: any) => this.parseActionnaireFormDataToDtoActionnaireData(actionnaire))],
       "responsables": [...data.step3Group.responsables.map((responsable: any) => this.parseResponsabeFormDataToDtoResponsabeData(responsable))],
-      "organigramme": "http://0.0.0.0:9003/docs",
+      "organigramme": data.step2Group.fichierOrganigramme,
+      "status": data.step2Group.fichierStatus,
       "entrepots": [
         ...data.step1Group.entrepots.map((entrepots: any) => this.parseEntrepotFormDataToDtoEntrepotData(entrepots))
       ]
     }
   }
-
+// TODO: this should be update for files so that we can upload multiple files on licence_exploitation and certificats
   private parseFromDtoToFormData(dto: Kyc): any {
     return {
       "step1Group": {
@@ -165,8 +173,9 @@ export class OnboardingApplicationService {
         "fichierDfe": dto.dfe.file,
         "numeroRccm": dto.rccm.numero,
         "fichierRccm": dto.rccm.file,
-        "licenseExploitation": dto.licence_exploitation,
-        "certificats": dto.certificats,
+        fichierStatus: dto.status,
+        "licenseExploitation": dto.licence_exploitation[0],
+        "certificats": dto.certificats[0],
         "fichierOrganigramme": dto.organigramme
       },
       "step3Group": {
@@ -181,7 +190,7 @@ export class OnboardingApplicationService {
       nomPrenom: dto.nom_prenom,
       telephone: dto.telephone,
       pourcentage: dto.pourcentage,
-      datePrisePosition: dto.date_prise_position
+      datePrisePosition: this.formatDate(dto.date_prise_position)
     }
   }
 
@@ -190,7 +199,7 @@ export class OnboardingApplicationService {
       nomPrenom: dto.nom_prenom,
       telephone: dto.telephone,
       position: dto.position,
-      datePrisePosition: dto.date_prise_position
+      datePrisePosition: this.formatDate(dto.date_prise_position)
     }
   }
 
@@ -199,7 +208,7 @@ export class OnboardingApplicationService {
       nom_prenom: member.nomPrenom,
       telephone: member.telephone,
       pourcentage: member.pourcentage,
-      date_prise_position: member.datePrisePosition
+      date_prise_position: new Date(member.datePrisePosition)
     }
   }
 
@@ -208,7 +217,7 @@ export class OnboardingApplicationService {
       nom_prenom: member.nomPrenom,
       telephone: member.telephone,
       position: member.position,
-      date_prise_position: member.datePrisePosition
+      date_prise_position: new Date(member.datePrisePosition)
     }
   }
 
@@ -224,6 +233,16 @@ export class OnboardingApplicationService {
     }
   }
 
+  private formatDate(date:any) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+  }
+
   private parseEntrepotDtoToFormData(dto: any): any {
     return {
       capacite: dto.capacite,
@@ -235,9 +254,14 @@ export class OnboardingApplicationService {
 
   createUserKyc() {
     const payload = this.generateSampleKycPayload();
-    this.onboardingService.createSampleKyc(payload).subscribe((res) => {
-      console.log('data res', res);
-      localStorage.setItem('kyc', JSON.stringify(res));
+    this.onboardingService.createSampleKyc(payload).subscribe(async (res) => {
+
+      await localStorage.setItem('kyc', JSON.stringify(res));
+      await localStorage.setItem('isLoggedin', 'true');
+      if (localStorage.getItem('isLoggedin')) {
+
+       await this.router.navigate(['/']);
+      }
     })
   }
 
@@ -252,8 +276,14 @@ export class OnboardingApplicationService {
   getCurrentKyc(id: any) {
     this.onboardingService.getKyc(id).subscribe((res) => {
       const formData = this.parseFromDtoToFormData(res);
-      console.log(formData);
-      localStorage.setItem('currentKycData', JSON.stringify(formData));
+      this.kycData.next(formData);
+      // localStorage.setItem('currentKycData', JSON.stringify(formData));
     })
+  }
+
+  uploadDocument(file: any) {
+    this.onboardingService.uploadFile(file).subscribe((res:any) => {
+      this.uploadedFile.next(res.filename);
+    });
   }
 }

@@ -1,3 +1,4 @@
+import urlList from 'src/app/core/utils/service-list';
 import { OnboardingApplicationService } from 'src/app/libs/onboarding-domain/application/onboarding-application.service';
 import { Commune, Ville } from './../../../libs/onboarding-domain/entities/localisation';
 import { FiliereIntervention, StatutJuridique, TypeEntite } from './../../../libs/onboarding-domain/entities/kyc';
@@ -5,6 +6,8 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { from } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-tableau-de-bord',
@@ -22,10 +25,11 @@ export class TableauDeBordComponent implements OnInit {
   communes: String[] = Object.values(Commune)
   statutJuridiques: String[] = Object.values(StatutJuridique)
   step1groupForm: any;
+  stepperIsActive: boolean = false;
+  formCompleted: boolean = false;
 
 
   constructor(public formBuilder: FormBuilder, private onboardingApplicationService: OnboardingApplicationService) {
-    console.log(this.typeEntites);
 
   }
 
@@ -35,7 +39,6 @@ export class TableauDeBordComponent implements OnInit {
     await this.addActionnaires()
     await this.addResponsable()
     await this.getCurrentKyc();
-    await this.setFormValue();
   }
 
 
@@ -68,8 +71,9 @@ export class TableauDeBordComponent implements OnInit {
         fichierDfe: new FormControl(''),
         numeroRccm: new FormControl(''),
         fichierRccm: new FormControl(''),
-        licenseExploitation: new FormControl([]),
-        certificats: new FormControl([]),
+        fichierStatus: new FormControl(''),
+        licenseExploitation: new FormControl(''),
+        certificats: new FormControl(''),
         fichierOrganigramme: new FormControl(''),
       }),
       step3Group: new FormGroup({
@@ -160,12 +164,29 @@ export class TableauDeBordComponent implements OnInit {
       this.onboardingApplicationService.createUserKyc();
       this.getCurrentKyc()
     }
+    this.onboardingApplicationService.kycData.subscribe(data => {
+      this.setFormValue(data);
+    })
+
+
   }
 
-  setFormValue() {
-    const currentKycData = JSON.parse(localStorage.getItem('currentKycData') || '{}');
-    console.log(currentKycData);
-    this.step1Form.patchValue(currentKycData);
+  async changeFile(event: any, controlName: any) {
+    const fileToUpload = await event.target.files[0];
+    await this.onboardingApplicationService.uploadDocument(fileToUpload);
+    await this.onboardingApplicationService.uploadedFile.subscribe((file) => {
+      this.step1Form.get(`step2Group.${controlName}`)?.patchValue(this.generateUploadedFilePath(file));
+    });
+  }
+
+  generateUploadedFilePath(fileName: string) {
+    return  `http://0.0.0.0:9005/files/${fileName}`
+  }
+
+
+  setFormValue(kyc: any) {
+
+    this.step1Form.patchValue(kyc);
   }
 
 

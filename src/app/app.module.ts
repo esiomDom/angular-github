@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { NgxHorizontalTimelineModule } from 'ngx-horizontal-timeline';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgxHorizontalTimelineModule,
     LayoutModule,
   ],
   providers: [

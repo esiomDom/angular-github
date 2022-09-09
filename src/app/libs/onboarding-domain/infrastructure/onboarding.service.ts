@@ -28,5 +28,13 @@ export class OnboardingService {
     return this.http.patch(url, payload);
   }
 
+  uploadFile(file: any): Observable<any> {
+    const url = environment.apiUrl + urlList.sfs.fileUpload;
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    return this.http.post(url, formData);
+
+  }
+
 
 }

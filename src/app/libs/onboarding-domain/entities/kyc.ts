@@ -50,5 +50,6 @@ export interface Kyc {
   actionnaires: Member[];
   responsables: Member[];
   organigramme: string;
+  status: string;
   entrepots: Entrepot[];
 }

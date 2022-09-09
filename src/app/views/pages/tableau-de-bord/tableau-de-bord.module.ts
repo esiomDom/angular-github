@@ -12,6 +12,7 @@ import { CustomFormsModule } from 'ngx-custom-validators';
 import { NgxMaskModule } from 'ngx-mask';
 
 
+
 @NgModule({
   declarations: [
     TableauDeBordComponent
@@ -26,7 +27,8 @@ import { NgxMaskModule } from 'ngx-mask';
     CustomFormsModule, // Ngx-custom-validators
     NgxMaskModule.forRoot({ validation: true }),
     NgSelectModule,
-    OnboardingDomainModule
+    OnboardingDomainModule,
+
   ]
 })
 export class TableauDeBordModule { }
