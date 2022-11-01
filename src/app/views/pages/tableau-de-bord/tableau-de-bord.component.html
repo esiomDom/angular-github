@@ -6,11 +6,7 @@
           <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
               <div class="d-flex align-items-center">
-                <img
-                  class="img-xs rounded-circle"
-                  src="https://via.placeholder.com/37x37"
-                  alt=""
-                />
+                <img class="img-xs rounded-circle" src="https://via.placeholder.com/37x37" alt="" />
                 <div class="ms-2">
                   <h3>GIE HEVEA</h3>
                 </div>
@@ -31,9 +27,9 @@
             </div>
           </div>
           <div class="card-footer d-grid gap-2">
-            <button [disabled]="stepperIsActive" (click)="stepperIsActive = true" class="btn btn-secondary"
-              >Renseigner mes infos</button
-            >
+            <button [disabled]="stepperIsActive" (click)="openXlModal(xlModal)"
+              [class]="stepperIsActive ? 'btn btn-secondary' : 'btn btn-success'">Renseigner mes
+              infos</button>
           </div>
         </div>
       </div>
@@ -41,23 +37,18 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
-              <h3 class="mb-0">Bienvenu dans votre espace client</h3>
+              <h3 class="mb-0">Bienvenue dans votre espace client</h3>
             </div>
             <div class="row mt-4">
               <div class="col-md-12">
                 <ul>
                   <li class="mt-3">
+                    la plateforme Afincap est une plateforme digitale donnant accès à des services financiers numériques
+                    tout en vous permettant de pouvoir bénéficier de services adaptés à vos besoins »
+                  </li>
+                  <li class="mt-3">
                     Pour tout contrat de pret vous vous devew de creer un compte
                     chez nos partenaire bancaire
-                  </li>
-                  <li class="mt-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </li>
-                  <li class="mt-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </li>
-                  <li class="mt-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   </li>
                 </ul>
               </div>
@@ -70,11 +61,30 @@
 </div>
 <!-- row -->
 
-<div class="row" *ngIf="!stepperIsActive && !formCompleted else stepper" >
+<ng-template #xlModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Politique d’utilisation</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <h4 class="text-center mb-3">Avant de commencer le renseignement de vos données, nous vous prions de prendre
+      connaissance
+      de la politique
+      d’utilisation de la plateforme</h4>
+    <pdf-viewer [src]="'assets/pdf/disclaimer.pdf'" [original-size]="true" style="width: 100%; height: 600px">
+    </pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close(accepted = false)">Refuser</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close(accepted = true)">Accepter</button>
+  </div>
+</ng-template>
+
+<div class="row" *ngIf="!stepperIsActive && !formCompleted else  stepper">
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Comment procéder à un prêt</h6>
+        <h6 class="card-title">Notre processus en quelques étapes</h6>
         <div id="content">
           <ul class="timeline">
             <li class="event">
@@ -111,768 +121,1069 @@
 
 
 
-<ng-template   #stepper>
-  <div class="row"  *ngIf="!formCompleted">
-  <div class="col-12 col-xl-12 grid-margin stretch-card">
-    <div class="card overflow-hidden">
-      <div class="card-body">
-        <h3 class="mb-3 card-title">Remplissez vos informations</h3>
-        <form (ngSubmit)="onSubmit()" [formGroup]="step1Form">
-          <aw-wizard>
-            <aw-wizard-step stepTitle="Etape 1">
-              <div formGroupName="step1Group">
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="typeEntite" class="form-label"
-                      >Type d'entité</label
-                    >
-                    <select
-                      formControlName="typeEntite"
-                      class="form-select"
-                      id="typeEntite"
-                      title="typeEntite"
-                    >
-                      <option selected disabled>selectionner un type</option>
-                      <option
-                        *ngFor="let typeEntite of typeEntites"
-                        value="{{ typeEntite }}"
-                      >
-                        {{ typeEntite }}
-                      </option>
-                    </select>
+<ng-template #stepper>
+  <div class="row" *ngIf="!formCompleted">
+    <div class="col-12 col-xl-12 grid-margin stretch-card">
+      <div class="card overflow-hidden">
+        <div class="card-body">
+          <h3 class="mb-3 card-title">Remplissez vos informations</h3>
+          <form (ngSubmit)="onSubmit()" [formGroup]="step1Form">
+            <aw-wizard>
+              <aw-wizard-step stepTitle="Etape 1">
+                <div formGroupName="step1Group">
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="typeEntite" class="form-label">Type d'entité</label>
+                      <select formControlName="typeEntite" class="form-select" id="typeEntite" title="typeEntite">
+                        <option selected disabled>selectionner un type</option>
+                        <option *ngFor="let typeEntite of typeEntites" value="{{ typeEntite }}">
+                          {{ typeEntite }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="denomination" class="form-label">Dénomination complète de l'entité</label>
+                      <input type="text" class="form-control" id="denomination" formControlName="denomination"
+                        placeholder="Dénomination complète de l'entité" />
+                    </div>
                   </div>
-                  <div class="col-md-6">
-                    <label for="denomination" class="form-label"
-                      >Dénomination complète de l'entité</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="denomination"
-                      formControlName="denomination"
-                      placeholder="Dénomination complète de l'entité"
-                    />
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Abbreviation</label>
+                      <input type="text" formControlName="abreviation" class="form-control" id="abbreviations"
+                        placeholder="Abbreviation" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="typeEntite" class="form-label">Filière d'intervention de l'entité</label>
+                      <ng-select [items]="filiereInterventions" [multiple]="true" [closeOnSelect]="false"
+                        [searchable]="false" bindLabel="name" placeholder="selectionner une filière"
+                        formControlName="filiereIntervention">
+                      </ng-select>
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="abbreviations" class="form-label"
-                      >Abbreviation</label
-                    >
-                    <input
-                      type="text"
-                      formControlName="abreviation"
-                      class="form-control"
-                      id="abbreviations"
-                      placeholder="Abbreviation"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <label for="typeEntite" class="form-label"
-                      >Filière d'intervention de l'entité</label
-                    >
-                    <ng-select
-                      [items]="filiereInterventions"
-                      [multiple]="true"
-                      [closeOnSelect]="false"
-                      [searchable]="false"
-                      bindLabel="name"
-                      placeholder="selectionner une filière"
-                      formControlName="filiereIntervention"
-                    >
-                    </ng-select>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label class="col-form-label">Région d'implantation</label>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <select
-                          class="form-select"
-                          formControlName="villeRegionImplementation"
-                          id="villeRegionImplementation"
-                          title="villeRegionImplementation"
-                        >
-                          <option selected disabled>Ville</option>
-                          <option
-                            *ngFor="let ville of villes"
-                            value="{{ ville }}"
-                          >
-                            {{ ville }}
-                          </option>
-                        </select>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label class="col-form-label">Région d'implantation</label>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <select class="form-select" formControlName="villeRegionImplementation"
+                            id="villeRegionImplementation" title="villeRegionImplementation">
+                            <option selected disabled>Ville</option>
+                            <option *ngFor="let ville of villes" value="{{ ville }}">
+                              {{ ville }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <select class="form-select" formControlName="communeRegionImplementation"
+                            id="communeRegionImplementation" title="communeRegionImplementation">
+                            <option selected disabled>Commune</option>
+                            <option *ngFor="let commune of communes" value="{{ commune }}">
+                              {{ commune }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" id="detail"
+                            formControlName="detailRegionImplementation" placeholder="Détails" />
+                        </div>
                       </div>
-                      <div class="col-md-4">
-                        <select
-                          class="form-select"
-                          formControlName="communeRegionImplementation"
-                          id="communeRegionImplementation"
-                          title="communeRegionImplementation"
-                        >
-                          <option selected disabled>Commune</option>
-                          <option
-                            *ngFor="let commune of communes"
-                            value="{{ commune }}"
-                          >
-                            {{ commune }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="col-md-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="detail"
-                          formControlName="detailRegionImplementation"
-                          placeholder="Détails"
-                        />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="col-form-label">Siège social</label>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <select class="form-select" formControlName="villeSiegeSocial" id="villeSiegeSocial"
+                            title="villeSiegeSocial">
+                            <option selected disabled>Ville</option>
+                            <option *ngFor="let ville of villes" value="{{ ville }}">
+                              {{ ville }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <select class="form-select" formControlName="communeSiegeSocial" id="communeSiegeSocial"
+                            title="communeSiegeSocial">
+                            <option selected disabled>Commune</option>
+                            <option *ngFor="let commune of communes" value="{{ commune }}">
+                              {{ commune }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" id="detail" formControlName="detailSiegeSocial"
+                            placeholder="Détails" />
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <label class="col-form-label">Siège social</label>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <select
-                          class="form-select"
-                          formControlName="villeSiegeSocial"
-                          id="villeSiegeSocial"
-                          title="villeSiegeSocial"
-                        >
-                          <option selected disabled>Ville</option>
-                          <option
-                            *ngFor="let ville of villes"
-                            value="{{ ville }}"
-                          >
-                            {{ ville }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="col-md-4">
-                        <select
-                          class="form-select"
-                          formControlName="communeSiegeSocial"
-                          id="communeSiegeSocial"
-                          title="communeSiegeSocial"
-                        >
-                          <option selected disabled>Commune</option>
-                          <option
-                            *ngFor="let commune of communes"
-                            value="{{ commune }}"
-                          >
-                            {{ commune }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="col-md-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="detail"
-                          formControlName="detailSiegeSocial"
-                          placeholder="Détails"
-                        />
-                      </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="site" class="form-label">Date de creation</label>
+                      <input type="date" formControlName="dateCreationEntite" class="form-control"
+                        id="dateCreationEntite" placeholder="07/07/07" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="telephone" class="form-label">Adresse Postale</label>
+                      <input type="text" formControlName="adressePostal" class="form-control" id="adressePostal"
+                        placeholder="adresse postale" />
                     </div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="site" class="form-label"
-                      >Date de creation</label
-                    >
-                    <input
-                      type="date"
-                      formControlName="dateCreationEntite"
-                      class="form-control"
-                      id="dateCreationEntite"
-                      placeholder="07/07/07"
-                    />
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="site" class="form-label">Email</label>
+                      <input type="email" formControlName="email" class="form-control" id="email"
+                        placeholder="email@example.com" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="telephone" class="form-label">Téléphone</label>
+                      <input type="phone" formControlName="telephone" class="form-control" id="telephone"
+                        placeholder="0707070707" />
+                    </div>
                   </div>
-                  <div class="col-md-6">
-                    <label for="telephone" class="form-label"
-                      >Adresse Postale</label
-                    >
-                    <input
-                      type="text"
-                      formControlName="adressePostal"
-                      class="form-control"
-                      id="adressePostal"
-                      placeholder="adresse postale"
-                    />
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="site" class="form-label">Email</label>
-                    <input
-                      type="email"
-                      formControlName="email"
-                      class="form-control"
-                      id="email"
-                      placeholder="email@example.com"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <label for="telephone" class="form-label">Téléphone</label>
-                    <input
-                      type="phone"
-                      formControlName="telephone"
-                      class="form-control"
-                      id="telephone"
-                      placeholder="0707070707"
-                    />
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-4">
-                    <label for="creation" class="form-label"
-                      >Site internet(si existant)</label
-                    >
-                    <input
-                      type="text"
-                      formControlName="siteInternet"
-                      class="form-control"
-                      id="siteInternet"
-                      placeholder="site internet"
-                    />
-                  </div>
-                  <div class="col-md-4">
-                    <label for="capitalSocial" class="form-label"
-                      >Capital social</label
-                    >
-                    <input
-                      type="text"
-                      formControlName="capitalSocial"
-                      class="form-control"
-                      id="capitalSocial"
-                      placeholder="0707070707"
-                    />
-                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-4">
+                      <label for="creation" class="form-label">Site internet(si existant)</label>
+                      <input type="text" formControlName="siteInternet" class="form-control" id="siteInternet"
+                        placeholder="site internet" />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="capitalSocial" class="form-label">Capital social</label>
+                      <input type="text" formControlName="capitalSocial" class="form-control" id="capitalSocial"
+                        placeholder="0707070707" />
+                    </div>
 
-                  <div class="col-md-4">
-                    <label for="statut" class="form-label"
-                      >Statut juridique</label
-                    >
-                    <select
-                      class="form-select"
-                      id="statut"
-                      formControlName="statutJuridique"
-                    >
-                      <option selected disabled>selectionner un status</option>
-                      <option
-                        *ngFor="let statut of statutJuridiques"
-                        value="{{ statut }}"
-                      >
-                        {{ statut }}
-                      </option>
-                    </select>
+                    <div class="col-md-4">
+                      <label for="statut" class="form-label">Statut juridique</label>
+                      <select class="form-select" id="statut" formControlName="statutJuridique">
+                        <option selected disabled>selectionner un status</option>
+                        <option *ngFor="let statut of statutJuridiques" value="{{ statut }}">
+                          {{ statut }}
+                        </option>
+                      </select>
+                    </div>
                   </div>
-                </div>
-                <div class="row mb-3" formArrayName="entrepots">
-                  <div
-                    class="col-md-12"
-                    *ngFor="let entrepot of entrepots.controls; let i = index"
-                  >
-                    <div class="row" [formGroup]="entrepot">
-                      <label class="form-label"
-                        >Entrepot, capacité de stockage et localisation</label
-                      >
-                      <div class="col-md-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="capacite"
-                          name="capacite"
-                          id="capacite"
-                          placeholder="Capacité entrepot"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <select
-                          class="form-select"
-                          formControlName="ville"
-                          id="ville"
-                          title="ville"
-                        >
-                          <option selected disabled>Ville</option>
-                          <option
-                            *ngFor="let ville of villes"
-                            value="{{ ville }}"
-                          >
-                            {{ ville }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="col-md-2">
-                        <select
-                          class="form-select"
-                          formControlName="commune"
-                          id="commune"
-                          title="commune"
-                        >
-                          <option selected disabled>Commune</option>
-                          <option
-                            *ngFor="let commune of communes"
-                            value="{{ commune }}"
-                          >
-                            {{ commune }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="col-md-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="details"
-                          id="details"
-                          placeholder="Détails"
-                        />
-                      </div>
-                      <div
-                        class="col-md-1 d-flex justify-content-center align-items-center"
-                      >
-                        <i
-                          class="feather icon-plus-circle icon-md onboarding-add-icon mt-2"
-                          width="34"
-                          (click)="addEntrepot()"
-                        ></i>
+                  <div class="row mb-3" formArrayName="entrepots">
+                    <div class="col-md-12" *ngFor="let entrepot of entrepots.controls; let i = index">
+                      <div class="row" [formGroup]="entrepot">
+                        <label class="form-label">Entrepot, capacité de stockage et localisation</label>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" formControlName="capacite" name="capacite"
+                            id="capacite" placeholder="Capacité entrepot" />
+                        </div>
+                        <div class="col-md-3">
+                          <select class="form-select" formControlName="ville" id="ville" title="ville">
+                            <option selected disabled>Ville</option>
+                            <option *ngFor="let ville of villes" value="{{ ville }}">
+                              {{ ville }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
+                          <select class="form-select" formControlName="commune" id="commune" title="commune">
+                            <option selected disabled>Commune</option>
+                            <option *ngFor="let commune of communes" value="{{ commune }}">
+                              {{ commune }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" formControlName="details" id="details"
+                            placeholder="Détails" />
+                        </div>
+                        <div class="col-md-1 d-flex justify-content-center align-items-center">
+                          <i class="feather icon-plus-circle icon-md onboarding-add-icon mt-2" width="34"
+                            (click)="addEntrepot()"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                      Enregister
+                    </button>
+                    <button class="btn btn-primary" type="button" awNextStep>
+                      Prochain
+                    </button>
+                  </div>
                 </div>
-                <div class="d-flex justify-content-center mt-2">
-                  <button
-                    class="btn btn-light me-2"
-                    type="button"
-                    (click)="patchKyc()"
-                  >
-                    Enregister
-                  </button>
-                  <button class="btn btn-primary" type="button" awNextStep>
-                    Prochain
-                  </button>
-                </div>
-              </div>
-            </aw-wizard-step>
-            <aw-wizard-step stepTitle="step 2">
-              <div formGroupName="step2Group">
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label class="form-label"
-                      >Numéro de référence fiscal et DFE</label
-                    >
-                    <div class="row">
-                      <div class="col-md-6">
-                        <input
-                          type="text"
-                          formControlName="numeroDfe"
-                          class="form-control"
-                          id="numeroDfe"
-                          placeholder="xxxxxxx"
-                        />
+              </aw-wizard-step>
+              <aw-wizard-step stepTitle="ETAPE 2">
+                <div formGroupName="step2Group">
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Numéro de référence fiscal et DFE</label>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input type="text" formControlName="numeroDfe" class="form-control" id="numeroDfe"
+                            placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-control" type="file" id="fichierDfe" title="fichierDfe"
+                            (change)="changeFile($event, 'fichierDfe')" />
+                        </div>
                       </div>
-                      <div class="col-md-6">
-                        <input
-                          class="form-control"
-                          type="file"
-                          id="fichierDfe"
-                          title="fichierDfe"
-                          (change)="changeFile($event, 'fichierDfe')"
-                        />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Numéro d'entreprise(RCCM)</label>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <input type="text" class="form-control" formControlName="numeroRccm" id="numeroRccm"
+                            placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-control" title="fichierRccm" type="file" id="fichierRccm"
+                            (change)="changeFile($event, 'fichierRccm')" />
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <label class="form-label">Numéro d'entreprise(RCCM)</label>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="numeroRccm"
-                          id="numeroRccm"
-                          placeholder="xxxxxxx"
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <input
-                          class="form-control"
-                          title="fichierRccm"
-                          type="file"
-                          id="fichierRccm"
-                          (change)="changeFile($event, 'fichierRccm')"
-                        />
-                      </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="licenseExploitation" class="form-label">License d'exploitation</label>
+                      <input class="form-control" type="file" id="licenseExploitation"
+                        (change)="changeFile($event, 'licenseExploitation')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="statutFile" class="form-label">Status</label>
+                      <input class="form-control" type="file" id="statutFile"
+                        (change)="changeFile($event, 'fichierStatus')" />
                     </div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="licenseExploitation" class="form-label"
-                      >License d'exploitation</label
-                    >
-                    <input
-                      class="form-control"
-                      type="file"
-                      id="licenseExploitation"
-                      (change)="changeFile($event, 'licenseExploitation')"
-                    />
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="organigrammeFile" class="form-label">Organigramme</label>
+                      <input class="form-control" type="file" id="organigrammeFile"
+                        (change)="changeFile($event, 'fichierOrganigramme')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="certificationFile" class="form-label">Certification et produits</label>
+                      <input class="form-control" type="file" id="certificationFile"
+                        (change)="changeFile($event, 'certificats')" />
+                    </div>
                   </div>
-                  <div class="col-md-6">
-                    <label for="statutFile" class="form-label">Status</label>
-                    <input
-                      class="form-control"
-                      type="file"
-                      id="statutFile"
-                      (change)="changeFile($event, 'fichierStatus')"
-                    />
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <label for="organigrammeFile" class="form-label"
-                      >Organigramme</label
-                    >
-                    <input
-                      class="form-control"
-                      type="file"
-                      id="organigrammeFile"
-                      (change)="changeFile($event, 'fichierOrganigramme')"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <label for="certificationFile" class="form-label"
-                      >Certification et produits</label
-                    >
-                    <input
-                      class="form-control"
-                      type="file"
-                      id="certificationFile"
-                      (change)="changeFile($event, 'certificats')"
-                    />
+                  <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                      Revenir
+                    </button>
+                    <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                      Enregister
+                    </button>
+                    <button class="btn btn-primary" type="button" awNextStep>
+                      Prochain
+                    </button>
                   </div>
                 </div>
-                <div class="d-flex justify-content-center mt-2">
-                  <button
-                    class="btn btn-secondary me-2"
-                    type="button"
-                    awPreviousStep
-                  >
-                    Revenir
-                  </button>
-                  <button
-                    class="btn btn-light me-2"
-                    type="button"
-                    (click)="patchKyc()"
-                  >
-                    Enregister
-                  </button>
-                  <button class="btn btn-primary" type="button" awNextStep>
-                    Prochain
-                  </button>
-                </div>
-              </div>
-            </aw-wizard-step>
+              </aw-wizard-step>
 
-            <aw-wizard-step stepTitle="Step 3">
-              <div formGroupName="step3Group">
-                <div class="row mb-4" formArrayName="actionnaires">
-                  <h3>LES ACTIONNAIRES</h3>
-                  <div
-                    class="col-md-12"
-                    *ngFor="
+              <aw-wizard-step stepTitle="ETAPE 3">
+                <div formGroupName="step3Group">
+                  <div class="row mb-4" formArrayName="actionnaires">
+                    <h3>LES ACTIONNAIRES</h3>
+                    <div class="col-md-12" *ngFor="
                       let actionnaire of actionnaires.controls;
                       let i = index
-                    "
-                  >
-                    <div class="row" [formGroup]="actionnaire">
-                      <div class="col-md-3">
-                        <label for="nomPrenomActionnaires" class="form-label"
-                          >Nom & Prennoms actionnaire !</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="nomPrenom"
-                          name="nomPrenom"
-                          id="nomPrenomActionnaires"
-                          placeholder="xxxxxxx"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <label for="datePrisePosition" class="form-label"
-                          >Date prise de position</label
-                        >
-                        <input
-                          type="date"
-                          class="form-control"
-                          formControlName="datePrisePosition"
-                          id="datePrisePositionAction"
-                          placeholder="xxxxxxx"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <label for="pourcentage" class="form-label"
-                          >Pourcentage</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="pourcentage"
-                          id="pourcentageAction"
-                          placeholder="xx%"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <label for="telephone" class="form-label"
-                          >Contact</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="telephone"
-                          id="telephoneAction"
-                          placeholder="xxxxxxx"
-                        />
-                      </div>
-                      <div
-                        class="col-md-1 d-flex justify-content-center align-items-center"
-                      >
-                        <i
-                          class="feather icon-plus-circle icon-md onboarding-add-icon mt-4"
-                          width="34"
-                          (click)="addActionnaires()"
-                        ></i>
+                    ">
+                      <div class="row" [formGroup]="actionnaire">
+                        <div class="col-md-3">
+                          <label for="nomPrenomActionnaires" class="form-label">Nom & Prennoms actionnaire !</label>
+                          <input type="text" class="form-control" formControlName="nomPrenom" name="nomPrenom"
+                            id="nomPrenomActionnaires" placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="datePrisePosition" class="form-label">Date prise de position</label>
+                          <input type="date" class="form-control" formControlName="datePrisePosition"
+                            id="datePrisePositionAction" placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-2">
+                          <label for="pourcentage" class="form-label">Pourcentage</label>
+                          <input type="text" class="form-control" formControlName="pourcentage" id="pourcentageAction"
+                            placeholder="xx%" />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="telephone" class="form-label">Contact</label>
+                          <input type="text" class="form-control" formControlName="telephone" id="telephoneAction"
+                            placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-1 d-flex justify-content-center align-items-center">
+                          <i class="feather icon-plus-circle icon-md onboarding-add-icon mt-4" width="34"
+                            (click)="addActionnaires()"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="row mb-3" formArrayName="responsables">
-                  <h3>LES RESPONSABLES</h3>
-                  <div
-                    class="col-md-12"
-                    *ngFor="
+                  <div class="row mb-3" formArrayName="responsables">
+                    <h3>LES RESPONSABLES</h3>
+                    <div class="col-md-12" *ngFor="
                       let responsables of responsables.controls;
                       let i = index
-                    "
-                  >
-                    <div class="row" [formGroupName]="i">
-                      <div class="col-md-3">
-                        <label for="nomPrenomResponsable" class="form-label"
-                          >Nom & Prennoms Responsable !</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="nomPrenom"
-                          id="nomPrenomResponsable"
-                          placeholder="xxxxxxx"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <label for="datePrisePositionRespo" class="form-label"
-                          >Date de prise de position</label
-                        >
-                        <input
-                          type="date"
-                          class="form-control"
-                          formControlName="datePrisePosition"
-                          id="datePrisePositionRespo"
-                          placeholder="xxxxxxx"
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <label for="positionRespo" class="form-label"
-                          >Position</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="position"
-                          id="positionRespo"
-                          placeholder="xx%"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <label for="telephoneRespo" class="form-label"
-                          >Contact</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="telephone"
-                          id="telephoneRespo"
-                          placeholder="xxxxxxx"
-                        />
-                      </div>
-                      <div
-                        class="col-md-1 d-flex justify-content-center align-items-center"
-                      >
-                        <i
-                          class="feather icon-plus-circle icon-md onboarding-add-icon mt-4"
-                          width="34"
-                          (click)="addResponsable()"
-                        ></i>
+                    ">
+                      <div class="row" [formGroupName]="i">
+                        <div class="col-md-3">
+                          <label for="nomPrenomResponsable" class="form-label">Nom & Prennoms Responsable !</label>
+                          <input type="text" class="form-control" formControlName="nomPrenom" id="nomPrenomResponsable"
+                            placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="datePrisePositionRespo" class="form-label">Date de prise de position</label>
+                          <input type="date" class="form-control" formControlName="datePrisePosition"
+                            id="datePrisePositionRespo" placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-2">
+                          <label for="positionRespo" class="form-label">Position</label>
+                          <input type="text" class="form-control" formControlName="position" id="positionRespo"
+                            placeholder="xx%" />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="telephoneRespo" class="form-label">Contact</label>
+                          <input type="text" class="form-control" formControlName="telephone" id="telephoneRespo"
+                            placeholder="xxxxxxx" />
+                        </div>
+                        <div class="col-md-1 d-flex justify-content-center align-items-center">
+                          <i class="feather icon-plus-circle icon-md onboarding-add-icon mt-4" width="34"
+                            (click)="addResponsable()"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
+                  <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                      Revenir
+                    </button>
+                    <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                      Enregister
+                    </button>
+                    <button class="btn btn-success" type="button" awNextStep>
+                      Prochain
+                    </button>
+                  </div>
+                </div>
+              </aw-wizard-step>
+
+              <aw-wizard-step stepTitle="ETAPE 4">
+                <div class=" text-center">
+                  <i data-feather="check-circle" appFeatherIcon class="text-success mt-4 mb-2 icon-xxl"></i>
+                  <h3 class="text-muted mb-3">Félicitations !</h3>
+                  <h4 class="w-75 mx-auto mb-4 text-muted">
+                    Félicitation toutes vos données ont bien été enregistrées,
+                    Pour soumettre une demande de prêt, veuillez choisir une
+                    banque partenaire
+                  </h4>
+                </div>
                 <div class="d-flex justify-content-center mt-2">
-                  <button
-                    class="btn btn-secondary me-2"
-                    type="button"
-                    awPreviousStep
-                  >
-                    Revenir
-                  </button>
-                  <button
-                    class="btn btn-light me-2"
-                    type="button"
-                    (click)="patchKyc()"
-                  >
-                    Enregister
-                  </button>
-                  <button class="btn btn-success" type="button" awNextStep>
-                    Prochain
+                  <button (click)="formCompleted = true;" class="btn btn-secondary me-2" type="button">
+                    VOIR MES INFORMATIONS
                   </button>
                 </div>
-              </div>
-            </aw-wizard-step>
-
-            <aw-wizard-step stepTitle="Fin">
-              <div class="text-center">
-                <i
-                  data-feather="check-circle"
-                  appFeatherIcon
-                  class="text-success mt-4 mb-2 icon-xxl"
-                ></i>
-                <h3 class="text-muted mb-3">Félicitations !</h3>
-                <h4 class="w-75 mx-auto mb-4 text-muted">
-                  Félicitation toutes vos données ont bien été enregistrées,
-                  Pour soumettre une demande de prêt, veuillez choisir une
-                  banque partenaire
-                </h4>
-              </div>
-              <div class="d-flex justify-content-center mt-2">
-                <button (click)="formCompleted = true;"  class="btn btn-secondary me-2" type="button">
-                  VOIR MES INFORMATIONS
-                </button>
-              </div>
-            </aw-wizard-step>
-          </aw-wizard>
-        </form>
+              </aw-wizard-step>
+            </aw-wizard>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 </ng-template>
 
-<div class="row" *ngIf="formCompleted " >
+<!-- <ng-template #stepper2>
+  <div class="row" *ngIf="!formCompleted">
+    <div class="col-12 col-xl-12 grid-margin stretch-card">
+      <div class="card overflow-hidden">
+        <div class="card-body">
+          <h3 class="mb-3 card-title">Remplissez le formulaire de demande de prêt</h3>
+          <form (ngSubmit)="onSubmit()" [formGroup]="step2Form">
+            <aw-wizard>
+              <aw-wizard-step stepTitle="Etape 1">
+                <div formGroupName="step1Group">
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="denomination" class="form-label">Dénomination complète de l'entité</label>
+                      <input type="text" class="form-control" id="denomination" formControlName="denomination"
+                        placeholder="Dénomination complète de l'entité" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="typeEntite" class="form-label">filière d'intervention</label>
+                      <select formControlName="typeEntite" class="form-select" id="typeEntite" title="typeEntite">
+                        <option selected disabled>selectionner un type</option>
+                        <option *ngFor="let typeEntite of typeEntites" value="{{ typeEntite }}">
+                          {{ typeEntite }}
+                        </option>
+                      </select>
+                    </div>
+
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="typeEntite" class="form-label">Nature de l'activitée pour laquelle le credit est
+                        demandé</label>
+                      <select formControlName="natureActivite" class="form-select" id="typeEntite" title="typeEntite">
+                        <option selected disabled>selectionner un type</option>
+                        <option *ngFor="let typeEntite of typeEntites" value="{{ typeEntite }}">
+                          {{ typeEntite }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Nom et prenoms du principal contact</label>
+                      <input type="text" formControlName="nomPrenomContactPrincipal" class="form-control"
+                        id="abbreviations" placeholder="Abbreviation" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Position du contact</label>
+                      <input type="text" formControlName="positionContact" class="form-control" id="abbreviations"
+                        placeholder="Abbreviation" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Numero de telephone du contact</label>
+                      <input type="text" formControlName="numeroContact" class="form-control" id="abbreviations"
+                        placeholder="Abbreviation" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Email du contact</label>
+                      <input type="text" formControlName="emailContact" class="form-control" id="abbreviations"
+                        placeholder="Abbreviation" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Capital social</label>
+                      <input type="text" formControlName="capitalSocial" class="form-control" id="abbreviations"
+                        placeholder="Abbreviation" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Assurance de l'entité</label>
+                      <input class="form-control" type="file" id="fichierDfe" title="fichierDfe"
+                        (change)="changeFile($event, 'assuranceEntite')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="abbreviations" class="form-label">Valeur nette comptable actuelle </label>
+                      <input type="text" formControlName="valeurNetteComptable" class="form-control" id="abbreviations"
+                        placeholder="Abbreviation" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="informationProduteurs" class="form-label">Informations producteurs/ fournisseurs
+                        (Nombres, contacts, localisation et volume contractuels)</label>
+                      <input class="form-control" type="informationProduteurs" id="informationProduteurs"
+                        title="informationProduteurs" (change)="changeFile($event, 'informationProduteurs')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="informationsClients" class="form-label">Informations clients/ fournisseurs (Nombres,
+                        contacts, localisation et volume contractuels) </label>
+                      <input class="form-control" type="informationsClients" id="informationsClients"
+                        title="informationsClients" (change)="changeFile($event, 'informationsClients')" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="modaliteDesPaiementAchatPRoducteurs" class="form-label">Modalite des paiement achat
+                        producteurs / Fournisseurs (Mode de reglement, detail de reglement)</label>
+                      <input type="text" formControlName="modaliteDesPaiementAchatPRoducteurs" class="form-control"
+                        id="modaliteDesPaiementAchatPRoducteurs" placeholder="modaliteDesPaiementAchatPRoducteurs" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="modaliteDesPaiementProduitsClients" class="form-label">Modalite des paiement produits
+                        clients (Mode de reglement, detail de reglement)</label>
+                      <input type="text" formControlName="modaliteDesPaiementProduitsClients" class="form-control"
+                        id="modaliteDesPaiementProduitsClients" placeholder="modaliteDesPaiementProduitsClients" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="tonnageTotalRealiseDerniereCampagne" class="form-label">Tonnage total realise sur la
+                        derniere campagne(indiquer le volume et periode de campagne)</label>
+                      <input type="text" formControlName="tonnageTotalRealiseDerniereCampagne" class="form-control"
+                        id="tonnageTotalRealiseDerniereCampagne" placeholder="tonnageTotalRealiseDerniereCampagne" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="informationsClients" class="form-label">
+                        Plan de campagne et tresorerie previsionnel
+                      </label>
+                      <input class="form-control" type="planDeCampagnePrevisionel" id="planDeCampagnePrevisionel"
+                        title="planDeCampagnePrevisionel" (change)="changeFile($event, 'planDeCampagnePrevisionel')" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="LettreIntentionContractAchat" class="form-label">Lettre d'intention et contracts
+                        achats / ventes (televerse les copies des lettres via 1 seul fichier)</label>
+                      <input class="form-control" type="LettreIntentionContractAchat" id="LettreIntentionContractAchat"
+                        title="LettreIntentionContractAchat"
+                        (change)="changeFile($event, 'LettreIntentionContractAchat')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="BonExecution" class="form-label">Bon d'execution ou des bon de commande (televerse les
+                        copies des lettres via 1 seul fichier)</label>
+                      <input class="form-control" type="BonExecution" id="BonExecution" title="BonExecution"
+                        (change)="changeFile($event, 'BonExecution')" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="typeDemandeCredit" class="form-label">Type de la demande de credit (credit fond de
+                        roulement)</label>
+                      <input type="text" formControlName="typeDemandeCredit" class="form-control" id="typeDemandeCredit"
+                        placeholder="typeDemandeCredit" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="MontantDemandeCredit" class="form-label">
+                        Montant de la demande de credit
+                      </label>
+                      <input type="text" formControlName="MontantDemandeCredit" class="form-control"
+                        id="MontantDemandeCredit" placeholder="MontantDemandeCredit" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="garantieFournies" class="form-label">Garanties / suretés fournies</label>
+                      <input type="text" formControlName="garantieFournies" class="form-control" id="garantieFournies"
+                        placeholder="garantieFournies" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="DureeFaciliteCredit" class="form-label">
+                        Durée de la facilité de credit
+                      </label>
+                      <input type="text" formControlName="DureeFaciliteCredit" class="form-control"
+                        id="DureeFaciliteCredit" placeholder="DureeFaciliteCredit" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="etatFinancierSurDeuxAns" class="form-label">Etats financiers sur 2 ans(televerser les
+                        2 derniers etats financier en 1 seul fichier)</label>
+                      <input class="form-control" type="etatFinancierSurDeuxAns" id="etatFinancierSurDeuxAns"
+                        title="etatFinancierSurDeuxAns" (change)="changeFile($event, 'etatFinancierSurDeuxAns')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="budgetPrevisionelCompteExploitationPrevisionel" class="form-label">Budget previsionnel
+                        ou compte d'exploitatoin pervisionnel</label>
+                      <input class="form-control" type="budgetPrevisionelCompteExploitationPrevisionel"
+                        id="budgetPrevisionelCompteExploitationPrevisionel"
+                        title="budgetPrevisionelCompteExploitationPrevisionel"
+                        (change)="changeFile($event, 'budgetPrevisionelCompteExploitationPrevisionel')" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="etatFinancierSurDeuxAns" class="form-label">Etats financiers sur 2 ans(televerser les
+                        2 derniers etats financier en 1 seul fichier)</label>
+                      <input class="form-control" type="etatFinancierSurDeuxAns" id="etatFinancierSurDeuxAns"
+                        title="etatFinancierSurDeuxAns" (change)="changeFile($event, 'etatFinancierSurDeuxAns')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="budgetPrevisionelCompteExploitationPrevisionel" class="form-label">Budget previsionnel
+                        ou compte d'exploitatoin pervisionnel</label>
+                      <input class="form-control" type="budgetPrevisionelCompteExploitationPrevisionel"
+                        id="budgetPrevisionelCompteExploitationPrevisionel"
+                        title="budgetPrevisionelCompteExploitationPrevisionel"
+                        (change)="changeFile($event, 'budgetPrevisionelCompteExploitationPrevisionel')" />
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="dispositionCompteBancaire" class="form-label">Etats financiers sur 2 ans(televerser
+                        les 2 derniers etats financier en 1 seul fichier)</label>
+                      <input class="form-control" type="dispositionCompteBancaire" id="dispositionCompteBancaire"
+                        title="dispositionCompteBancaire" (change)="changeFile($event, 'dispositionCompteBancaire')" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="informationEngagementOuPretsContracteActuel" class="form-label">Budget previsionnel ou
+                        compte d'exploitatoin pervisionnel</label>
+                      <input class="form-control" type="informationEngagementOuPretsContracteActuel"
+                        id="informationEngagementOuPretsContracteActuel"
+                        title="informationEngagementOuPretsContracteActuel"
+                        (change)="changeFile($event, 'informationEngagementOuPretsContracteActuel')" />
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Avez-vous deja connu des contentieux /
+                      litiges dans les reglements de vos engagements ? Si oui, quelle a ete la situation a ces
+                      difficultes ?</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                    Enregister
+                  </button>
+                  <button class="btn btn-primary" type="button" awNextStep>
+                    Prochain
+                  </button>
+                </div>
+              </aw-wizard-step>
+              <aw-wizard-step stepTitle="ETAPE 2">
+                <div formGroupName="step2Group">
+                  <ngb-alert [dismissible]="false" [type]="'dark'">INDEPENDANCE FINANCIERE</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Capitaux propres N-1</label>
+                      <input type="text" formControlName="capitauxPropreNMoinUn" class="form-control"
+                        id="capitauxPropreNMoinUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Capitaux propres N</label>
+                      <input type="text" formControlName="capitauxPropreN" class="form-control" id="capitauxPropreN"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Dettes financières N-1</label>
+                      <input type="text" formControlName="detteFinanciereNMoinsUn" class="form-control"
+                        id="detteFinanciereNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Dettes financières N</label>
+                      <input type="text" formControlName="detteFinanciereN" class="form-control" id="detteFinanciereN"
+                        placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">LIQUIDITE GENERALE</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Actif circulant N-1</label>
+                      <input type="text" formControlName="actifCirculantNMoinsUn" class="form-control"
+                        id="actifCirculantNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Actif circulant N</label>
+                      <input type="text" formControlName="actifCirculantN" class="form-control" id="actifCirculantN"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Passif circulant N-1</label>
+                      <input type="text" formControlName="passifCirculantNMoinsUn" class="form-control"
+                        id="passifCirculantNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Passif circulant N</label>
+                      <input type="text" formControlName="passifCirculantN" class="form-control" id="passifCirculantN"
+                        placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">COUVERTURE DES EMPLOIS STABLE</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Capitaux permanents N-1</label>
+                      <input type="text" formControlName="capitauxPermanentNMoinsUn" class="form-control"
+                        id="capitauxPermanentNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Capitaux permanents N</label>
+                      <input type="text" formControlName="capitauxPermanentN" class="form-control"
+                        id="capitauxPermanentN" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Actif immobilisé N-1</label>
+                      <input type="text" formControlName="actifImmobiliseNMoinsUn" class="form-control"
+                        id="actifImmobiliseNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Actif immobilisé N</label>
+                      <input type="text" formControlName="actifImmobiliseN" class="form-control" id="actifImmobiliseN"
+                        placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">ACTIVITES</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Chiffre d’affaires HT N-1</label>
+                      <input type="text" formControlName="chiffreAffaireHTActiviteNMoinsUn" class="form-control"
+                        id="chiffreAffaireHTActiviteNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Chiffre d’affaires HT N</label>
+                      <input type="text" formControlName="chiffreAffaireHTActiviteN" class="form-control"
+                        id="chiffreAffaireHTActiviteN" placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">RENTABILITE NET</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Résultat net N-1</label>
+                      <input type="text" formControlName="resultatNetNMoinsUn" class="form-control"
+                        id="resultatNetNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Résultat net N</label>
+                      <input type="text" formControlName="resultatNetN" class="form-control" id="resultatNetN"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Chiffre d’affaires HT N-1</label>
+                      <input type="text" formControlName="chiffreAffaireHTRentabiliteNMoinsUn" class="form-control"
+                        id="chiffreAffaireHTRentabiliteNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Chiffre d’affaires HT N</label>
+                      <input type="text" formControlName="chiffreAffaireHTRentabiliteN" class="form-control"
+                        id="chiffreAffaireHTRentabiliteN" placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">MARGE COMMERCIALE</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Marge commerciale N-1</label>
+                      <input type="text" formControlName="margeComercialeNMoinsUn" class="form-control"
+                        id="margeComercialeNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Marge commerciale N</label>
+                      <input type="text" formControlName="margeComercialeN" class="form-control" id="margeComercialeN"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Chiffre d’affaires HT N-1</label>
+                      <input type="text" formControlName="chiffreAffaireHTMargeNMoinsUn" class="form-control"
+                        id="chiffreAffaireHTMargeNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Chiffre d’affaires HT N</label>
+                      <input type="text" formControlName="chiffreAffaireHTMargeN" class="form-control"
+                        id="chiffreAffaireHTMargeN" placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">DELAI DE ROTATION DES STOCKS</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Stock moyen sur l’exercice N-1</label>
+                      <input type="text" formControlName="stockMoyenExerciceNMoinsUn" class="form-control"
+                        id="stockMoyenExerciceNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Stock moyen sur l’exercice N</label>
+                      <input type="text" formControlName="stockMoyenExerciceN" class="form-control"
+                        id="stockMoyenExerciceN" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Achats consommés de l’exercice N-1</label>
+                      <input type="text" formControlName="achatConsommeExerciceNMoinsUn" class="form-control"
+                        id="achatConsommeExerciceNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Achats consommés de l’exercice N</label>
+                      <input type="text" formControlName="achatConsommeExerciceN" class="form-control"
+                        id="achatConsommeExerciceN" placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">DELAI CREDIT CLIENTS</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Créances clients N-1</label>
+                      <input type="text" formControlName="creanceClientNMoinsUn" class="form-control"
+                        id="creanceClientNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Créances clients N</label>
+                      <input type="text" formControlName="creanceClientN" class="form-control" id="creanceClientN"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Ventes TTC N-1</label>
+                      <input type="text" formControlName="venteTTCNMoinsUn" class="form-control" id="venteTTCNMoinsUn"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Ventes TTC N</label>
+                      <input type="text" formControlName="VenteTTCN" class="form-control" id="VenteTTCN"
+                        placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">DELAI CREDIT FOURNISSEURS</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Dettes fournisseurs N-1</label>
+                      <input type="text" formControlName="dettesFournisseursNMoins" class="form-control"
+                        id="dettesFournisseursNMoins" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Dettes fournisseurs N</label>
+                      <input type="text" formControlName="dettesFournisseursN" class="form-control"
+                        id="dettesFournisseursN" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Achats TTC N-1</label>
+                      <input type="text" formControlName="achatTTCNMoinsUn" class="form-control" id="achatTTCNMoinsUn"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Achats TTC N</label>
+                      <input type="text" formControlName="achatTTCN" class="form-control" id="achatTTCN"
+                        placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">CAPACITE DE REMBOURSEMENT</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Endettement net N-1</label>
+                      <input type="text" formControlName="endettementNMoinsUn" class="form-control"
+                        id="endettementNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Endettement net N</label>
+                      <input type="text" formControlName="endettementN" class="form-control" id="endettementN"
+                        placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Capacité d’autofinancement N-1</label>
+                      <input type="text" formControlName="capaciteAutotFinancementNMoinsUn" class="form-control"
+                        id="capaciteAutotFinancementNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Capacité d’autofinancement N</label>
+                      <input type="text" formControlName="capaciteAutotFinancementN" class="form-control"
+                        id="capaciteAutotFinancementN" placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                  <ngb-alert [dismissible]="false" [type]="'dark'">RENTABILITE DES CAPITAUX PROPRES</ngb-alert>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <label class="form-label">Résultat net N-1</label>
+                      <input type="text" formControlName="resultatNetRentabiliteCapitauxPropreNMoinsUn"
+                        class="form-control" id="resultatNetRentabiliteCapitauxPropreNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Résultat net N</label>
+                      <input type="text" formControlName="resultatNetRentabiliteCapitauxPropreN" class="form-control"
+                        id="resultatNetRentabiliteCapitauxPropreN" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Capitaux propres N-1</label>
+                      <input type="text" formControlName="capitauxPropreRentabiliteNMoinsUn" class="form-control"
+                        id="capitauxPropreRentabiliteNMoinsUn" placeholder="xxxxxxx" />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Capitaux propres N</label>
+                      <input type="text" formControlName="capitauxPropreRentabiliteN" class="form-control"
+                        id="capitauxPropreRentabiliteN" placeholder="xxxxxxx" />
+                    </div>
+
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                    Revenir
+                  </button>
+                  <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                    Enregister
+                  </button>
+                  <button class="btn btn-primary" type="button" awNextStep>
+                    Prochain
+                  </button>
+                </div>
+              </aw-wizard-step>
+
+              <aw-wizard-step stepTitle="ETAPE 3">
+                <div formGroupName="step3Group">
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label class="form-label">FOND DE ROULEMENT</label>
+                      <input type="text" formControlName="fondRoulement" class="form-control" id="fondRoulement"
+                        placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label class="form-label">BENEFICES NON REPARTIS</label>
+                      <input type="text" formControlName="beneficeNonReparti" class="form-control"
+                        id="beneficeNonReparti" placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label class="form-label">BENEFICES NON REPARTIS</label>
+                      <input type="text" formControlName="beneficeNonReparti" class="form-control"
+                        id="beneficeNonReparti" placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label class="form-label">BENEFICES AVANT INTERET ET IMPOTS</label>
+                      <input type="text" formControlName="beneficeAvantInteretImpot" class="form-control"
+                        id="beneficeAvantInteretImpot" placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label class="form-label">VALEUR COMPTABLES DES CAPITAUX PROPRES</label>
+                      <input type="text" formControlName="valeurComptableCapitauxPropres" class="form-control"
+                        id="valeurComptableCapitauxPropres" placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label class="form-label">TOTAL DES ACTIFS</label>
+                      <input type="text" formControlName="totalActifs" class="form-control" id="totalActifs"
+                        placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label class="form-label">TOTAL DES PASSIFS</label>
+                      <input type="text" formControlName="totalPassifs" class="form-control" id="totalPassifs"
+                        placeholder="xxxxxxx" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                      Revenir
+                    </button>
+                    <button class="btn btn-success me-2" type="button" (click)="patchKyc()">
+                      Enregister
+                    </button>
+                  </div>
+                </div>
+              </aw-wizard-step>
+
+            </aw-wizard>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template> -->
+
+<div class="row" *ngIf="formCompleted ">
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">VOS INFORMATIONS</h6>
-       <div class="row">
-        <div class="col-md-8">
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Type d'entité</span> : {{step1Form.value.step1Group.typeEntite}}
-            </p>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Type d'entité</span> : {{step1Form.value.step1Group.typeEntite}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Dénomination complète</span> : {{step1Form.value.step1Group.denomination}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Abréviation</span> : {{step1Form.value.step1Group.abreviation}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Filière d'intervention</span> :
+                {{step1Form.value.step1Group.filiereIntervention}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Région d'implémentation</span> :
+                {{step1Form.value.step1Group.villeRegionImplementation}},
+                {{step1Form.value.step1Group.communeRegionImplementation}},
+                {{step1Form.value.step1Group.detailRegionImplementation}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Siège social</span> : {{step1Form.value.step1Group.villeSiegeSocial}},
+                {{step1Form.value.step1Group.communeSiegeSocial}}, {{step1Form.value.step1Group.detailSiegeSocial}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Adresse électronique</span> : {{step1Form.value.step1Group.email}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Telephone</span> : {{step1Form.value.step1Group.telephone}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Date de création</span> : {{step1Form.value.step1Group.dateCreationEntite}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Capital Social</span> : {{step1Form.value.step1Group.capitalSocial}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Statut juridique</span> : {{step1Form.value.step1Group.statutJuridique}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom"
+              *ngFor="let entrepot of step1Form.value.step1Group.entrepots; let i = index">
+              <p class=" ">
+                <span class="text-muted">Entrepot {{i+1}}</span> : <span *ngIf="entrepot">{{entrepot.capacite}} Tonnes, {{entrepot.ville}} ,
+                {{entrepot.commune}}, {{entrepot.details}}</span>
+              </p>
+            </div>
+            <div class="mt-3 border-bottom"
+              *ngFor="let entrepot of step1Form.value.step3Group.actionnaires; let i = index">
+              <p class=" ">
+                <span *ngIf="entrepot" class="text-muted">Actionnaire {{i+1}}</span> : {{entrepot.nomPrenom}},
+                {{entrepot.datePrisePosition}} , {{entrepot.pourcentage}}%, {{entrepot.telephone}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom"
+              *ngFor="let entrepot of step1Form.value.step3Group.responsables; let i = index">
+              <p class=" ">
+                <span class="text-muted">Responsable {{i+1}}</span> : {{entrepot.nomPrenom}},
+                {{entrepot.datePrisePosition}} , {{entrepot.position}}, {{entrepot.telephone}}
+              </p>
+            </div>
           </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Dénomination complète</span> : {{step1Form.value.step1Group.denomination}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Abréviation</span> : {{step1Form.value.step1Group.abreviation}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Filière d'intervention</span> : {{step1Form.value.step1Group.filiereIntervention}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Région d'implémentation</span> : {{step1Form.value.step1Group.villeRegionImplementation}}, {{step1Form.value.step1Group.communeRegionImplementation}}, {{step1Form.value.step1Group.detailRegionImplementation}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Siège social</span> : {{step1Form.value.step1Group.villeSiegeSocial}}, {{step1Form.value.step1Group.communeSiegeSocial}}, {{step1Form.value.step1Group.detailSiegeSocial}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Adresse électronique</span> : {{step1Form.value.step1Group.email}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Telephone</span> : {{step1Form.value.step1Group.telephone}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Date de création</span> : {{step1Form.value.step1Group.dateCreationEntite}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Capital Social</span> : {{step1Form.value.step1Group.capitalSocial}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom">
-            <p class=" ">
-              <span class="text-muted">Statut juridique</span> : {{step1Form.value.step1Group.statutJuridique}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom" *ngFor="let entrepot of step1Form.value.step1Group.entrepots; let i = index" >
-            <p class=" ">
-              <span class="text-muted">Entrepot {{i+1}}</span> : {{entrepot.capacite}} Tonnes, {{entrepot.ville}} , {{entrepot.commune}}, {{entrepot.details}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom" *ngFor="let entrepot of step1Form.value.step3Group.actionnaires; let i = index" >
-            <p class=" ">
-              <span class="text-muted">Actionnaire {{i+1}}</span> : {{entrepot.nomPrenom}}, {{entrepot.datePrisePosition}} , {{entrepot.pourcentage}}%, {{entrepot.telephone}}
-            </p>
-          </div>
-          <div class="mt-3 border-bottom" *ngFor="let entrepot of step1Form.value.step3Group.responsables; let i = index" >
-            <p class=" ">
-              <span class="text-muted">Responsable {{i+1}}</span> : {{entrepot.nomPrenom}}, {{entrepot.datePrisePosition}} , {{entrepot.position}}, {{entrepot.telephone}}
-            </p>
+          <div class="col-md-4">
+            <ul class="nav flex-column">
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierRccm}}" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Régistre de commerce </a></li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierDfe}}" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Déclaration Fiscale entreprise</a>
+              </li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.licenseExploitation}}"
+                  (click)="false" class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> License d'exploitation</a></li>
+
+              <li class="nav-item"><a href="{{step1Form.value.step2Group.fichierStatus}}" target="blank" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Status </a></li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierOrganigramme}}"
+                  (click)="false" class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Organigrame </a></li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.certificats}}" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Certifications </a></li>
+            </ul>
           </div>
         </div>
-        <div class="col-md-4">
-          <ul class="nav flex-column">
-
-            <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierRccm}}" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> Régistre de commerce </a></li>
-
-            <li class="nav-item"><a  target="blank" href="{{step1Form.value.step2Group.fichierDfe}}" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> Déclaration Fiscale entreprise</a></li>
-
-            <li class="nav-item"><a  target="blank" href="{{step1Form.value.step2Group.licenseExploitation}}" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> License d'exploitation</a></li>
-
-            <li class="nav-item"><a href="{{step1Form.value.step2Group.fichierStatus}}" target="blank" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> Status </a></li>
-
-            <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierOrganigramme}}" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> Organigrame </a></li>
-
-            <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.certificats}}" (click)="false" class="nav-link d-flex align-items-center text-body"><span class="feather icon-file-text icon-lg text-muted me-1"></span> Certifications </a></li>
-          </ul>
+        <div class="d-flex justify-content-end mt-2">
+          <button (click)="formCompleted = false;" class="btn btn-secondary me-2" type="button">
+            Modifier
+          </button>
         </div>
-       </div>
-      <div class="d-flex justify-content-end mt-2">
-        <button (click)="formCompleted = false;"  class="btn btn-secondary me-2" type="button">
-          Modifier
-        </button>
-      </div>
       </div>
     </div>
   </div>
 </div>
-

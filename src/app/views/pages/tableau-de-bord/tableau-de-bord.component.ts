@@ -3,10 +3,12 @@ import { OnboardingApplicationService } from 'src/app/libs/onboarding-domain/app
 import { Commune, Ville } from './../../../libs/onboarding-domain/entities/localisation';
 import { FiliereIntervention, StatutJuridique, TypeEntite } from './../../../libs/onboarding-domain/entities/kyc';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { from } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @Component({
@@ -16,6 +18,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TableauDeBordComponent implements OnInit {
   step1Form: FormGroup;
+  step2Form: FormGroup;
   isStep1FormSubmitted: Boolean;
   filiereIntervention: any[]
   kycId: any;
@@ -27,18 +30,29 @@ export class TableauDeBordComponent implements OnInit {
   step1groupForm: any;
   stepperIsActive: boolean = false;
   formCompleted: boolean = false;
+  accepted: boolean = false;
 
 
-  constructor(public formBuilder: FormBuilder, private onboardingApplicationService: OnboardingApplicationService) {
+  constructor(public formBuilder: FormBuilder, private onboardingApplicationService: OnboardingApplicationService, private modalService: NgbModal) {
 
   }
 
   async ngOnInit() {
+    // await this.initStep2Form()
     await this.initStep1Form()
     await this.addEntrepot()
     await this.addActionnaires()
     await this.addResponsable()
     await this.getCurrentKyc();
+  }
+
+  openXlModal(content: TemplateRef<any>) {
+    this.modalService.open(content, { size: 'xl' }).result.then((result) => {
+      // console.log(result);
+      if (this.accepted) {
+        this.stepperIsActive = true
+      }
+    }).catch((res) => { });
   }
 
 
@@ -79,6 +93,94 @@ export class TableauDeBordComponent implements OnInit {
       step3Group: new FormGroup({
         actionnaires: this.formBuilder.array([]),
         responsables: this.formBuilder.array([])
+      })
+    })
+  }
+
+  initStep2Form = () => {
+    this.step2Form = this.formBuilder.group({
+      step1Group: new FormGroup({
+        denomination: new FormControl(''),
+        typeEntite: new FormControl([]),
+        nomPrenomContactPrincipal: new FormControl(''),
+        natureActivite: new FormControl(''),
+        positionContact: new FormControl(''),
+        numeroContact: new FormControl(''),
+        emailContact: new FormControl(''),
+        capitalSocial: new FormControl(''),
+        assuranceEntite: new FormControl(''),
+        valeurNetteComptable: new FormControl(''),
+        informationProduteurs: new FormControl(''),
+        informationsClients: new FormControl(''),
+        modaliteDesPaiementAchatPRoducteurs: new FormControl(''),
+        modaliteDesPaiementProduitsClients: new FormControl(''),
+        tonnageTotalRealiseDerniereCampagne: new FormControl(''),
+        planDeCampagnePrevisionel: new FormControl(''),
+        LettreIntentionContractAchat: new FormControl(''),
+        BonExecution: new FormControl(''),
+        typeDemandeCredit: new FormControl(''),
+        MontantDemandeCredit: new FormControl(''),
+        garantieFournies: new FormControl(''),
+        DureeFaciliteCredit: new FormControl(),
+        etatFinancierSurDeuxAns: new FormControl(''),
+        budgetPrevisionelCompteExploitationPrevisionel: new FormControl(''),
+        dispositionCompteBancaire: new FormControl(''),
+        informationEngagementOuPretsContracteActuel: new FormControl(''),
+
+      }),
+      step2Group: new FormGroup({
+        capitauxPropreNMoinUn: new FormControl(''),
+        capitauxPropreN: new FormControl(''),
+        detteFinanciereNMoinsUn: new FormControl(''),
+        detteFinanciereN: new FormControl(''),
+        actifCirculantNMoinsUn: new FormControl(''),
+        actifCirculantN: new FormControl(''),
+        passifCirculantNMoinsUn: new FormControl(''),
+        passifCirculantN: new FormControl(''),
+        capitauxPermanentNMoinsUn: new FormControl(''),
+        capitauxPermanentN: new FormControl(''),
+        actifImmobiliseNMoinsUn: new FormControl(''),
+        actifImmobiliseN: new FormControl(''),
+        chiffreAffaireHTActiviteNMoinsUn: new FormControl(''),
+        chiffreAffaireHTActiviteN: new FormControl(''),
+        resultatNetNMoinsUn: new FormControl(''),
+        resultatNetN: new FormControl(''),
+        chiffreAffaireHTRentabiliteNMoinsUn: new FormControl(''),
+        chiffreAffaireHTRentabiliteN: new FormControl(''),
+        margeComercialeNMoinsUn: new FormControl(''),
+        margeComercialeN: new FormControl(''),
+        chiffreAffaireHTMargeNMoinsUn: new FormControl(''),
+        chiffreAffaireHTMargeN: new FormControl(''),
+        stockMoyenExerciceNMoinsUn: new FormControl(''),
+        stockMoyenExerciceN: new FormControl(''),
+        achatConsommeExerciceNMoinsUn: new FormControl(''),
+        achatConsommeExerciceN: new FormControl(''),
+        creanceClientNMoinsUn: new FormControl(''),
+        creanceClientN: new FormControl(''),
+        venteTTCNMoinsUn: new FormControl(''),
+        VenteTTCN: new FormControl(''),
+        dettesFournisseursNMoins: new FormControl(''),
+        dettesFournisseursN: new FormControl(''),
+        achatTTCNMoinsUn: new FormControl(''),
+        achatTTCN: new FormControl(''),
+        endettementNMoinsUn: new FormControl(''),
+        endettementN: new FormControl(''),
+        capaciteAutotFinancementNMoinsUn: new FormControl(''),
+        capaciteAutotFinancementN: new FormControl(''),
+        resultatNetRentabiliteCapitauxPropreNMoinsUn: new FormControl(''),
+        resultatNetRentabiliteCapitauxPropreN: new FormControl(''),
+        capitauxPropreRentabiliteNMoinsUn: new FormControl(''),
+        capitauxPropreRentabiliteN: new FormControl(''),
+
+
+      }),
+      step3Group: new FormGroup({
+        fondRoulement: new FormControl(''),
+        beneficeNonReparti: new FormControl(''),
+        beneficeAvantInteretImpot: new FormControl(''),
+        valeurComptableCapitauxPropres: new FormControl(''),
+        totalActifs: new FormControl(''),
+        totalPassifs: new FormControl(''),
       })
     })
   }
@@ -180,7 +282,7 @@ export class TableauDeBordComponent implements OnInit {
   }
 
   generateUploadedFilePath(fileName: string) {
-    return  `http://0.0.0.0:9005/files/${fileName}`
+    return `http://0.0.0.0:9005/files/${fileName}`
   }
 
 

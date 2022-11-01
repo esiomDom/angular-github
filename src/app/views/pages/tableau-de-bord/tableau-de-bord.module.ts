@@ -10,6 +10,8 @@ import { ArchwizardModule } from 'angular-archwizard';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import { NgxMaskModule } from 'ngx-mask';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -28,6 +30,8 @@ import { NgxMaskModule } from 'ngx-mask';
     NgxMaskModule.forRoot({ validation: true }),
     NgSelectModule,
     OnboardingDomainModule,
+    PdfViewerModule,
+    NgbModule
 
   ]
 })

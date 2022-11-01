@@ -7,12 +7,12 @@ export const MENU: MenuItem[] = [
     link: '/tableau-de-bord'
   },
   {
-    label: 'Mes bootiques',
+    label: 'Mes banques',
     icon: 'dollar-sign',
     link: '#'
   },
   {
-    label: 'Mes banques',
+    label: 'Mes prêts',
     icon: 'credit-card',
     link: '#'
   },
