@@ -18,12 +18,12 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  onLoggedin(e: Event) {
+  async onLoggedin(e: Event) {
     e.preventDefault();
-    localStorage.setItem('isLoggedin', 'true');
-    this.onboardingDomainService.createUserKyc();
+    await localStorage.setItem('isLoggedin', 'true');
+    // await this.onboardingDomainService.createUserKyc();
     if (localStorage.getItem('isLoggedin')) {
-      this.router.navigate([this.returnUrl]);
+      await this.router.navigate([this.returnUrl]);
     }
   }
 

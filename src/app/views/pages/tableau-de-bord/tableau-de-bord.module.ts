@@ -7,6 +7,12 @@ import { TableauDeBordComponent } from './tableau-de-bord.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeahterIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { ArchwizardModule } from 'angular-archwizard';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CustomFormsModule } from 'ngx-custom-validators';
+import { NgxMaskModule } from 'ngx-mask';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
@@ -20,7 +26,13 @@ import { ArchwizardModule } from 'angular-archwizard';
     ReactiveFormsModule,
     FeahterIconModule,
     ArchwizardModule,
-    OnboardingDomainModule
+    CustomFormsModule, // Ngx-custom-validators
+    NgxMaskModule.forRoot({ validation: true }),
+    NgSelectModule,
+    OnboardingDomainModule,
+    PdfViewerModule,
+    NgbModule
+
   ]
 })
 export class TableauDeBordModule { }
