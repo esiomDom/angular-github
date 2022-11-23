@@ -1,9 +1,9 @@
 const urlList = {
   "onboarding": {
-    "kyc": ":9003/kyc"
+    "kyc": ":81"
   },
   "sfs": {
-    "fileUpload": ":9005/uploadfile"
+    "fileUpload": ":83"
   }
 }
 

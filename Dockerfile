@@ -1,11 +1,11 @@
-FROM node:18.7.0-alpine as builder
+FROM node:latest as build-stage
 WORKDIR /app
-COPY ./package.json ./
-RUN npm i
-COPY . .
+COPY package*.json ./
+RUN npm ci
+COPY ./ .
 RUN npm run build
-
-FROM nginx
-EXPOSE 3000
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/dist/client /usr/share/nginx/html
+FROM nginx:latest
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
+USER nginx

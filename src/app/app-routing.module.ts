@@ -73,7 +73,7 @@ const routes: Routes = [
     path: 'error/:type',
     component: ErrorPageComponent
   },
-  { path: 'tableau-de-bord', loadChildren: () => import('./views/pages/tableau-de-bord/tableau-de-bord.module').then(m => m.TableauDeBordModule) },
+  { path: 'auth', loadChildren: () => import('./views/pages/tableau-de-bord/tableau-de-bord.module').then(m => m.TableauDeBordModule) },
   { path: '**', redirectTo: 'error', pathMatch: 'full' }
 ];
 
