@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit {
   async onLoggedin(e: Event) {
     e.preventDefault();
     await localStorage.setItem('isLoggedin', 'true');
-    // await this.onboardingDomainService.createUserKyc();
-    if (localStorage.getItem('isLoggedin')) {
-      await this.router.navigate([this.returnUrl]);
-    }
+    const kyc = await this.onboardingDomainService.createUserKyc();
+    // if (localStorage.getItem('isLoggedin') && kyc['oid']) {
+    //   await this.router.navigate([this.returnUrl]);
+    // }
   }
 
 }
