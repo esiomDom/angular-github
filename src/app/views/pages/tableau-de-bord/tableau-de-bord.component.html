@@ -44,11 +44,10 @@
                 <ul>
                   <li class="mt-3">
                     la plateforme Afincap est une plateforme digitale donnant accès à des services financiers numériques
-                    tout en vous permettant de pouvoir bénéficier de services adaptés à vos besoins »
+                    tout en vous permettant de pouvoir bénéficier de services adaptés à vos besoins
                   </li>
                   <li class="mt-3">
-                    Pour tout contrat de pret vous vous devew de creer un compte
-                    chez nos partenaire bancaire
+                    Pour tout contrat de prêt, vous vous devez de créer un compte chez nos partenaires bancaires.
                   </li>
                 </ul>
               </div>
@@ -88,28 +87,28 @@
         <div id="content">
           <ul class="timeline">
             <li class="event">
-              <h3 class="title">1ère étape</h3>
+              <h3 class="title">ETAPE 1</h3>
               <p>
-                Inscrivez vous sur la plateforme d'AFINCAP Si vous voyez ce
-                message c'est que c'est fait
+                Créez votre profil sur la plateforme en vous inscrivant<i>Si vous voyez ce
+                message c'est que c'est fait</i>
               </p>
             </li>
             <li class="event">
-              <h3 class="title">2e étape</h3>
+              <h3 class="title">ETAPE 2
+              </h3>
               <p>
-                Une fois inscrit, renseignez les informations de votre
-                entreprise
+                Une fois inscrit, renseignez les informations de votre entreprise (Formulaire KYC).
               </p>
             </li>
             <li class="event">
-              <h3 class="title">3e étape</h3>
-              <p>Notre algorithme étudie les données de votre entreprise</p>
+              <h3 class="title">ETAPE 3</h3>
+              <p>Renseignez les informations sur votre activité (KYB) et vos données financières</p>
             </li>
             <li class="event">
-              <h3 class="title">4e étape</h3>
+              <h3 class="title">ETAPE 4</h3>
               <p>
-                Youpi ! Une fois validé, vous recevez un message de Notre part
-                vous demandant de nous rejoindre pour .
+                Vous êtes aptes à bénéficier des services de la plateforme (Ouverture de compte, Scoring, Demande de prêt, Demande
+                d'assurance, ...).
               </p>
             </li>
           </ul>
@@ -126,10 +125,10 @@
     <div class="col-12 col-xl-12 grid-margin stretch-card">
       <div class="card overflow-hidden">
         <div class="card-body">
-          <h3 class="mb-3 card-title">Remplissez vos informations</h3>
+          <h3 class="mb-3 card-title">ETAPE 2 : KYC REMPLISSEZ VOS INFORMATIONS</h3>
           <form (ngSubmit)="onSubmit()" [formGroup]="step1Form">
             <aw-wizard>
-              <aw-wizard-step stepTitle="Etape 1">
+              <aw-wizard-step stepTitle="Page 1">
                 <div formGroupName="step1Group">
                   <div class="row mb-3">
                     <div class="col-md-6">
@@ -219,7 +218,7 @@
                   </div>
                   <div class="row mb-3">
                     <div class="col-md-6">
-                      <label for="site" class="form-label">Date de creation</label>
+                      <label for="site" class="form-label">Date de création</label>
                       <input type="date" formControlName="dateCreationEntite" class="form-control"
                         id="dateCreationEntite" placeholder="07/07/07" />
                     </div>
@@ -308,7 +307,7 @@
                   </div>
                 </div>
               </aw-wizard-step>
-              <aw-wizard-step stepTitle="ETAPE 2">
+              <aw-wizard-step stepTitle="Page 2">
                 <div formGroupName="step2Group">
                   <div class="row mb-3">
                     <div class="col-md-6">
@@ -340,12 +339,12 @@
                   </div>
                   <div class="row mb-3">
                     <div class="col-md-6">
-                      <label for="licenseExploitation" class="form-label">License d'exploitation</label>
+                      <label for="licenseExploitation" class="form-label">Licence d'exploitation</label>
                       <input class="form-control" type="file" id="licenseExploitation"
                         (change)="changeFile($event, 'licenseExploitation')" />
                     </div>
                     <div class="col-md-6">
-                      <label for="statutFile" class="form-label">Status</label>
+                      <label for="statutFile" class="form-label">Statuts</label>
                       <input class="form-control" type="file" id="statutFile"
                         (change)="changeFile($event, 'fichierStatus')" />
                     </div>
@@ -357,7 +356,7 @@
                         (change)="changeFile($event, 'fichierOrganigramme')" />
                     </div>
                     <div class="col-md-6">
-                      <label for="certificationFile" class="form-label">Certification et produits</label>
+                      <label for="certificationFile" class="form-label">Certifications  produits</label>
                       <input class="form-control" type="file" id="certificationFile"
                         (change)="changeFile($event, 'certificats')" />
                     </div>
@@ -376,7 +375,7 @@
                 </div>
               </aw-wizard-step>
 
-              <aw-wizard-step stepTitle="ETAPE 3">
+              <aw-wizard-step stepTitle="Page 3">
                 <div formGroupName="step3Group">
                   <div class="row mb-4" formArrayName="actionnaires">
                     <h3>LES ACTIONNAIRES</h3>
@@ -386,7 +385,7 @@
                     ">
                       <div class="row" [formGroup]="actionnaire">
                         <div class="col-md-3">
-                          <label for="nomPrenomActionnaires" class="form-label">Nom & Prennoms actionnaire !</label>
+                          <label for="nomPrenomActionnaires" class="form-label">Nom & Prenoms actionnaire !</label>
                           <input type="text" class="form-control" formControlName="nomPrenom" name="nomPrenom"
                             id="nomPrenomActionnaires" placeholder="xxxxxxx" />
                         </div>
@@ -420,7 +419,7 @@
                     ">
                       <div class="row" [formGroupName]="i">
                         <div class="col-md-3">
-                          <label for="nomPrenomResponsable" class="form-label">Nom & Prennoms Responsable !</label>
+                          <label for="nomPrenomResponsable" class="form-label">Nom & Prenoms Responsable !</label>
                           <input type="text" class="form-control" formControlName="nomPrenom" id="nomPrenomResponsable"
                             placeholder="xxxxxxx" />
                         </div>
@@ -461,14 +460,15 @@
                 </div>
               </aw-wizard-step>
 
-              <aw-wizard-step stepTitle="ETAPE 4">
+              <aw-wizard-step stepTitle="Page 4">
                 <div class=" text-center">
                   <i data-feather="check-circle" appFeatherIcon class="text-success mt-4 mb-2 icon-xxl"></i>
                   <h3 class="text-muted mb-3">Félicitations !</h3>
                   <h4 class="w-75 mx-auto mb-4 text-muted">
-                    Félicitation toutes vos données ont bien été enregistrées,
-                    Pour soumettre une demande de prêt, veuillez choisir une
-                    banque partenaire
+                    Félicitations toutes vos données du KYC ont été bien enregistrées.
+
+                    Vous pouvez passer à l'étape suivante afin de renseigner les informations sur votre activité et quelques données
+                    financières (ETAPE 3 : KYB).
                   </h4>
                 </div>
                 <div class="d-flex justify-content-center mt-2">
