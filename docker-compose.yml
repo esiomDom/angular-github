@@ -1,8 +1,9 @@
 version: '3.8'
 
 services:
-  loan-ui-docker:
-    build:
-      context: .
+  angular-incubtek-docker:
+    image: "${WEB_IMAGE}:latest"
+    environment:
+      NODE_ENV: production
     ports:
       - 80:80
