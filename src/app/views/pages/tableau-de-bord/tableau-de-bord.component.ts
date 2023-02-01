@@ -8,6 +8,7 @@ import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { from } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 
 
@@ -33,7 +34,7 @@ export class TableauDeBordComponent implements OnInit {
   accepted: boolean = false;
 
 
-  constructor(public formBuilder: FormBuilder, private onboardingApplicationService: OnboardingApplicationService, private modalService: NgbModal) {
+  constructor(public formBuilder: FormBuilder, private onboardingApplicationService: OnboardingApplicationService, private modalService: NgbModal, private router: Router) {
 
   }
 
@@ -298,6 +299,10 @@ export class TableauDeBordComponent implements OnInit {
 
   onSubmit() {
     alert('form submited')
+  }
+
+  goToCreditScoring() {
+    this.router.navigate(['/credit-scoring']);
   }
 
 

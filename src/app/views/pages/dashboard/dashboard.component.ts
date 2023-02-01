@@ -20,9 +20,9 @@ export class DashboardComponent implements OnInit {
   public monthlySalesChartOptions: any = {};
   public cloudStorageChartOptions: any = {};
 
-  // colors and font variables for apex chart 
+  // colors and font variables for apex chart
   obj = {
-    primary        : "#6571ff",
+    primary        : "#1BAB57",
     secondary      : "#7987a1",
     success        : "#05a34a",
     info           : "#66d1d1",
@@ -433,10 +433,10 @@ function getMonthlySalesChartOptions(obj: any) {
         show: false
       },
     },
-    colors: [obj.primary],  
+    colors: [obj.primary],
     fill: {
       opacity: .9
-    } , 
+    } ,
     grid: {
       padding: {
         bottom: -4
@@ -528,7 +528,7 @@ function getMonthlySalesChartOptions(obj: any) {
           background: obj.light,
           strokeWidth: '100%',
           opacity: 1,
-          margin: 5, 
+          margin: 5,
         },
         dataLabels: {
           showOn: "always",

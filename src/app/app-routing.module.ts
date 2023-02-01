@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     component: BaseComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
@@ -56,6 +56,10 @@ const routes: Routes = [
       {
         path: 'tableau-de-bord',
         loadChildren: () => import('./views/pages/tableau-de-bord/tableau-de-bord.module').then(m => m.TableauDeBordModule)
+      },
+      {
+        path: 'credit-scoring',
+        loadChildren: () => import('./views/pages/credit-scoring/credit-scoring.module').then(m => m.CreditScoringModule)
       }
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
