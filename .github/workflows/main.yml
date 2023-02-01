@@ -27,12 +27,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-      - name: install dependencies
-        run: |
-          yarn install
-      - name: build prod
-        run: |
-          yarn run build
       - name: Pull images
         run: |
           docker pull ${{ env.WEB_IMAGE }} || true
