@@ -26,13 +26,13 @@ jobs:
           node-version: 16
       - name: Pull images
         run: |
-          docker pull ghcr.io/esiomdom/loan-ui || true
+          docker pull ghcr.io/esiomdom/loan-ui-test || true
       - name: Build images
         run: |
-          docker build -t ghcr.io/esiomdom/loan-ui:latest .
+          docker build -t ghcr.io/esiomdom/loan-ui-test:latest .
       - name: Push images
         run: |
-          docker push ghcr.io/esiomdom/loan-ui:latest
+          docker push ghcr.io/esiomdom/loan-ui-test:latest
 
   deploy:
     name: Deploy to DigitalOcean
@@ -61,8 +61,9 @@ jobs:
           scp  -o StrictHostKeyChecking=no -r ./docker-compose.yml root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/front
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
             cd /front
+            cat docker-compose.yml
             echo ${PERSONAL_ACCESS_TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
             docker kill $(docker ps -q)
-            docker pull ghcr.io/esiomdom/loan-ui:latest
+            docker pull ghcr.io/esiomdom/loan-ui-test:latest
             docker-compose up -d --build
           ENDSSH
