@@ -26,19 +26,19 @@ jobs:
           node-version: 14
       - name: install dependencies
         run: |
-          yarn install
+          npm install
       - name: build prod
         run: |
-          yarn run build
+          npm run build
       - name: Pull images
         run: |
-          docker pull ghcr.io/esiomdom/loan-up:latest || true
+          docker pull ghcr.io/esiomdom/loan-up1:latest || true
       - name: Build images
         run: |
-          docker build -t ghcr.io/esiomdom/loan-up:latest .
+          docker build -t ghcr.io/esiomdom/loan-up1:latest .
       - name: Push images
         run: |
-          docker push ghcr.io/esiomdom/loan-up:latest
+          docker push ghcr.io/esiomdom/loan-up1:latest
 
   deploy:
     name: Deploy to DigitalOcean
@@ -70,6 +70,6 @@ jobs:
             cat docker-compose.yml
             echo ${PERSONAL_ACCESS_TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
             docker kill $(docker ps -q)
-            docker pull ghcr.io/esiomdom/loan-up:latest
+            docker pull ghcr.io/esiomdom/loan-up1:latest
             docker-compose up -d --build
           ENDSSH
