@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   angular-incubtek-docker:
-    image: "ghcr.io/esiomdom/loan-ui"
+    image: "ghcr.io/esiomdom/loan-up:latest"
     environment:
       NODE_ENV: production
     ports:
