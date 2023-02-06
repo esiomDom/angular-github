@@ -12,12 +12,18 @@ import { CustomFormsModule } from 'ngx-custom-validators';
 import { NgxMaskModule } from 'ngx-mask';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { KycComponent } from './kyc/kyc.component';
+import { AccueilComponent } from './accueil/accueil.component';
+import { KyBComponent } from './kyb/kyb.component';
 
 
 
 @NgModule({
   declarations: [
-    TableauDeBordComponent
+    TableauDeBordComponent,
+    KycComponent,
+    AccueilComponent,
+    KyBComponent
   ],
   imports: [
     CommonModule,

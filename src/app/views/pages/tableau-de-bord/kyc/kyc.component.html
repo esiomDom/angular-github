@@ -1,0 +1,497 @@
+
+<div class="row" *ngIf="!formCompleted">
+  <div class="col-12 col-xl-12 grid-margin stretch-card">
+    <div class="card overflow-hidden">
+      <div class="card-body">
+        <h3 class="mb-3 card-title">ETAPE 2 : KYC REMPLISSEZ VOS INFORMATIONS</h3>
+        <form (ngSubmit)="onSubmit()" [formGroup]="step1Form">
+          <aw-wizard>
+            <aw-wizard-step stepTitle="Page 1">
+              <div formGroupName="step1Group">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="typeEntite" class="form-label">Type d'entité</label>
+                    <select formControlName="typeEntite" class="form-select" id="typeEntite" title="typeEntite">
+                      <option selected disabled>selectionner un type</option>
+                      <option *ngFor="let typeEntite of typeEntites" value="{{ typeEntite }}">
+                        {{ typeEntite }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="denomination" class="form-label">Dénomination complète de l'entité</label>
+                    <input type="text" class="form-control" id="denomination" formControlName="denomination"
+                      placeholder="Dénomination complète de l'entité" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Abbreviation</label>
+                    <input type="text" formControlName="abreviation" class="form-control" id="abbreviations"
+                      placeholder="Abbreviation" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="typeEntite" class="form-label">Filière d'intervention de l'entité</label>
+                    <ng-select [items]="filiereInterventions" [multiple]="true" [closeOnSelect]="false"
+                      [searchable]="false" bindLabel="name" placeholder="selectionner une filière"
+                      formControlName="filiereIntervention">
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label class="col-form-label">Région d'implantation</label>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <select class="form-select" formControlName="villeRegionImplementation"
+                          id="villeRegionImplementation" title="villeRegionImplementation">
+                          <option selected disabled>Ville</option>
+                          <option *ngFor="let ville of villes" value="{{ ville }}">
+                            {{ ville }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <select class="form-select" formControlName="communeRegionImplementation"
+                          id="communeRegionImplementation" title="communeRegionImplementation">
+                          <option selected disabled>Commune</option>
+                          <option *ngFor="let commune of communes" value="{{ commune }}">
+                            {{ commune }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <input type="text" class="form-control" id="detail" formControlName="detailRegionImplementation"
+                          placeholder="Détails" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label">Siège social</label>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <select class="form-select" formControlName="villeSiegeSocial" id="villeSiegeSocial"
+                          title="villeSiegeSocial">
+                          <option selected disabled>Ville</option>
+                          <option *ngFor="let ville of villes" value="{{ ville }}">
+                            {{ ville }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <select class="form-select" formControlName="communeSiegeSocial" id="communeSiegeSocial"
+                          title="communeSiegeSocial">
+                          <option selected disabled>Commune</option>
+                          <option *ngFor="let commune of communes" value="{{ commune }}">
+                            {{ commune }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <input type="text" class="form-control" id="detail" formControlName="detailSiegeSocial"
+                          placeholder="Détails" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="site" class="form-label">Date de création</label>
+                    <input type="date" formControlName="dateCreationEntite" class="form-control" id="dateCreationEntite"
+                      placeholder="07/07/07" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="telephone" class="form-label">Adresse Postale</label>
+                    <input type="text" formControlName="adressePostal" class="form-control" id="adressePostal"
+                      placeholder="adresse postale" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="site" class="form-label">Email</label>
+                    <input type="email" formControlName="email" class="form-control" id="email"
+                      placeholder="email@example.com" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="telephone" class="form-label">Téléphone</label>
+                    <input type="phone" formControlName="telephone" class="form-control" id="telephone"
+                      placeholder="0707070707" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <label for="creation" class="form-label">Site internet(si existant)</label>
+                    <input type="text" formControlName="siteInternet" class="form-control" id="siteInternet"
+                      placeholder="site internet" />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="capitalSocial" class="form-label">Capital social</label>
+                    <input type="text" formControlName="capitalSocial" class="form-control" id="capitalSocial"
+                      placeholder="0707070707" />
+                  </div>
+
+                  <div class="col-md-4">
+                    <label for="statut" class="form-label">Statut juridique</label>
+                    <select class="form-select" id="statut" formControlName="statutJuridique">
+                      <option selected disabled>selectionner un status</option>
+                      <option *ngFor="let statut of statutJuridiques" value="{{ statut }}">
+                        {{ statut }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3" formArrayName="entrepots">
+                  <div class="col-md-12" *ngFor="let entrepot of entrepots.controls; let i = index">
+                    <div class="row" [formGroup]="entrepot">
+                      <label class="form-label">Entrepot, capacité de stockage et localisation</label>
+                      <div class="col-md-3">
+                        <input type="text" class="form-control" formControlName="capacite" name="capacite" id="capacite"
+                          placeholder="Capacité entrepot" />
+                      </div>
+                      <div class="col-md-3">
+                        <select class="form-select" formControlName="ville" id="ville" title="ville">
+                          <option selected disabled>Ville</option>
+                          <option *ngFor="let ville of villes" value="{{ ville }}">
+                            {{ ville }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-2">
+                        <select class="form-select" formControlName="commune" id="commune" title="commune">
+                          <option selected disabled>Commune</option>
+                          <option *ngFor="let commune of communes" value="{{ commune }}">
+                            {{ commune }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-3">
+                        <input type="text" class="form-control" formControlName="details" id="details"
+                          placeholder="Détails" />
+                      </div>
+                      <div class="col-md-1 d-flex justify-content-center align-items-center">
+                        <i class="feather icon-plus-circle icon-md onboarding-add-icon mt-2" width="34"
+                          (click)="addEntrepot()"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                    Enregister
+                  </button>
+                  <button class="btn btn-primary" type="button" awNextStep>
+                    Prochain
+                  </button>
+                </div>
+              </div>
+            </aw-wizard-step>
+            <aw-wizard-step stepTitle="Page 2">
+              <div formGroupName="step2Group">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Numéro de référence fiscal et DFE</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="text" formControlName="numeroDfe" class="form-control" id="numeroDfe"
+                          placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-6">
+                        <input class="form-control" type="file" id="fichierDfe" title="fichierDfe"
+                          (change)="changeFile($event, 'fichierDfe')" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Numéro d'entreprise(RCCM)</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" formControlName="numeroRccm" id="numeroRccm"
+                          placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-6">
+                        <input class="form-control" title="fichierRccm" type="file" id="fichierRccm"
+                          (change)="changeFile($event, 'fichierRccm')" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="licenseExploitation" class="form-label">Licence d'exploitation</label>
+                    <input class="form-control" type="file" id="licenseExploitation"
+                      (change)="changeFile($event, 'licenseExploitation')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="statutFile" class="form-label">Statuts</label>
+                    <input class="form-control" type="file" id="statutFile"
+                      (change)="changeFile($event, 'fichierStatus')" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="organigrammeFile" class="form-label">Organigramme</label>
+                    <input class="form-control" type="file" id="organigrammeFile"
+                      (change)="changeFile($event, 'fichierOrganigramme')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="certificationFile" class="form-label">Certifications produits</label>
+                    <input class="form-control" type="file" id="certificationFile"
+                      (change)="changeFile($event, 'certificats')" />
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                    Revenir
+                  </button>
+                  <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                    Enregister
+                  </button>
+                  <button class="btn btn-primary" type="button" awNextStep>
+                    Prochain
+                  </button>
+                </div>
+              </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Page 3">
+              <div formGroupName="step3Group">
+                <div class="row mb-4" formArrayName="actionnaires">
+                  <h3>LES ACTIONNAIRES</h3>
+                  <div class="col-md-12" *ngFor="
+                      let actionnaire of actionnaires.controls;
+                      let i = index
+                    ">
+                    <div class="row" [formGroup]="actionnaire">
+                      <div class="col-md-3">
+                        <label for="nomPrenomActionnaires" class="form-label">Nom & Prenoms actionnaire !</label>
+                        <input type="text" class="form-control" formControlName="nomPrenom" name="nomPrenom"
+                          id="nomPrenomActionnaires" placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="datePrisePosition" class="form-label">Date prise de position</label>
+                        <input type="date" class="form-control" formControlName="datePrisePosition"
+                          id="datePrisePositionAction" placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-2">
+                        <label for="pourcentage" class="form-label">Pourcentage</label>
+                        <input type="text" class="form-control" formControlName="pourcentage" id="pourcentageAction"
+                          placeholder="xx%" />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="telephone" class="form-label">Contact</label>
+                        <input type="text" class="form-control" formControlName="telephone" id="telephoneAction"
+                          placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-1 d-flex justify-content-center align-items-center">
+                        <i class="feather icon-plus-circle icon-md onboarding-add-icon mt-4" width="34"
+                          (click)="addActionnaires()"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3" formArrayName="responsables">
+                  <h3>LES RESPONSABLES</h3>
+                  <div class="col-md-12" *ngFor="
+                      let responsables of responsables.controls;
+                      let i = index
+                    ">
+                    <div class="row" [formGroupName]="i">
+                      <div class="col-md-3">
+                        <label for="nomPrenomResponsable" class="form-label">Nom & Prenoms Responsable !</label>
+                        <input type="text" class="form-control" formControlName="nomPrenom" id="nomPrenomResponsable"
+                          placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="datePrisePositionRespo" class="form-label">Date de prise de position</label>
+                        <input type="date" class="form-control" formControlName="datePrisePosition"
+                          id="datePrisePositionRespo" placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-2">
+                        <label for="positionRespo" class="form-label">Position</label>
+                        <input type="text" class="form-control" formControlName="position" id="positionRespo"
+                          placeholder="xx%" />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="telephoneRespo" class="form-label">Contact</label>
+                        <input type="text" class="form-control" formControlName="telephone" id="telephoneRespo"
+                          placeholder="xxxxxxx" />
+                      </div>
+                      <div class="col-md-1 d-flex justify-content-center align-items-center">
+                        <i class="feather icon-plus-circle icon-md onboarding-add-icon mt-4" width="34"
+                          (click)="addResponsable()"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                    Revenir
+                  </button>
+                  <button class="btn btn-light me-2" type="button" (click)="patchKyc()">
+                    Enregister
+                  </button>
+                  <button class="btn btn-success" type="button" awNextStep>
+                    Prochain
+                  </button>
+                </div>
+              </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="Page 4">
+              <div class=" text-center">
+                <i data-feather="check-circle" appFeatherIcon class="text-success mt-4 mb-2 icon-xxl"></i>
+                <h3 class="text-muted mb-3">Félicitations !</h3>
+                <h4 class="w-75 mx-auto mb-4 text-muted">
+                  Félicitations toutes vos données du KYC ont été bien enregistrées.
+
+                  Vous pouvez passer à l'étape suivante afin de renseigner les informations sur votre activité et
+                  quelques données
+                  financières (ETAPE 3 : KYB).
+                </h4>
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button (click)="formCompleted = true;" class="btn btn-secondary me-2" type="button">
+                  VOIR MES INFORMATIONS
+                </button>
+              </div>
+            </aw-wizard-step>
+          </aw-wizard>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row" *ngIf="formCompleted ">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">VOS INFORMATIONS</h6>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Type d'entité</span> : {{step1Form.value.step1Group.typeEntite}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Dénomination complète</span> : {{step1Form.value.step1Group.denomination}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Abréviation</span> : {{step1Form.value.step1Group.abreviation}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Filière d'intervention</span> :
+                {{step1Form.value.step1Group.filiereIntervention}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Région d'implémentation</span> :
+                {{step1Form.value.step1Group.villeRegionImplementation}},
+                {{step1Form.value.step1Group.communeRegionImplementation}},
+                {{step1Form.value.step1Group.detailRegionImplementation}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Siège social</span> : {{step1Form.value.step1Group.villeSiegeSocial}},
+                {{step1Form.value.step1Group.communeSiegeSocial}}, {{step1Form.value.step1Group.detailSiegeSocial}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Adresse électronique</span> : {{step1Form.value.step1Group.email}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Telephone</span> : {{step1Form.value.step1Group.telephone}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Date de création</span> : {{step1Form.value.step1Group.dateCreationEntite}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Capital Social</span> : {{step1Form.value.step1Group.capitalSocial}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom">
+              <p class=" ">
+                <span class="text-muted">Statut juridique</span> : {{step1Form.value.step1Group.statutJuridique}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom"
+              *ngFor="let entrepot of step1Form.value.step1Group.entrepots; let i = index">
+              <p class=" ">
+                <span class="text-muted">Entrepot {{i+1}}</span> : <span *ngIf="entrepot">{{entrepot.capacite}} Tonnes, {{entrepot.ville}} ,
+                {{entrepot.commune}}, {{entrepot.details}}</span>
+              </p>
+            </div>
+            <div class="mt-3 border-bottom"
+              *ngFor="let entrepot of step1Form.value.step3Group.actionnaires; let i = index">
+              <p class=" ">
+                <span *ngIf="entrepot" class="text-muted">Actionnaire {{i+1}}</span> : {{entrepot.nomPrenom}},
+                {{entrepot.datePrisePosition}} , {{entrepot.pourcentage}}%, {{entrepot.telephone}}
+              </p>
+            </div>
+            <div class="mt-3 border-bottom"
+              *ngFor="let entrepot of step1Form.value.step3Group.responsables; let i = index">
+              <p class=" ">
+                <span class="text-muted">Responsable {{i+1}}</span> : {{entrepot.nomPrenom}},
+                {{entrepot.datePrisePosition}} , {{entrepot.position}}, {{entrepot.telephone}}
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <ul class="nav flex-column">
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierRccm}}" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Régistre de commerce </a></li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierDfe}}" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Déclaration Fiscale entreprise</a>
+              </li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.licenseExploitation}}"
+                  (click)="false" class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> License d'exploitation</a></li>
+
+              <li class="nav-item"><a href="{{step1Form.value.step2Group.fichierStatus}}" target="blank" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Status </a></li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.fichierOrganigramme}}"
+                  (click)="false" class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Organigrame </a></li>
+
+              <li class="nav-item"><a target="blank" href="{{step1Form.value.step2Group.certificats}}" (click)="false"
+                  class="nav-link d-flex align-items-center text-body"><span
+                    class="feather icon-file-text icon-lg text-muted me-1"></span> Certifications </a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end mt-2">
+          <button (click)="formCompleted = false;" class="btn btn-secondary me-2" type="button">
+            Modifier
+          </button>
+          <button (click)="goToCreditScoring()" class="btn btn-primary" type="button">
+             mes informations bancaires
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

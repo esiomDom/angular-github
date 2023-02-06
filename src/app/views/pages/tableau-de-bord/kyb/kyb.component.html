@@ -1,0 +1,569 @@
+<div class="row" >
+  <div class="col-12 col-xl-12 grid-margin stretch-card">
+    <div class="card overflow-hidden">
+      <div class="card-body">
+        <h3 class="mb-3 card-title">ETAPE 3 :Remplissez le formulaire de demande de prêt</h3>
+        <form (ngSubmit)="onSubmit()" [formGroup]="step2Form">
+          <aw-wizard>
+            <aw-wizard-step stepTitle="Etape 1">
+              <div formGroupName="step1Group">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="denomination" class="form-label">Dénomination complète de l'entité</label>
+                    <input type="text" class="form-control" id="denomination" formControlName="denomination"
+                      placeholder="Dénomination complète de l'entité" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="typeEntite" class="form-label">filière d'intervention</label>
+                    <select formControlName="typeEntite" class="form-select" id="typeEntite" title="typeEntite">
+                      <option selected disabled>selectionner un type</option>
+                      <option *ngFor="let typeEntite of typeEntites" value="{{ typeEntite }}">
+                        {{ typeEntite }}
+                      </option>
+                    </select>
+                  </div>
+
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="typeEntite" class="form-label">Nature de l'activitée pour laquelle le credit est
+                      demandé</label>
+                    <select formControlName="natureActivite" class="form-select" id="typeEntite" title="typeEntite">
+                      <option selected disabled>selectionner un type</option>
+                      <option *ngFor="let typeEntite of typeEntites" value="{{ typeEntite }}">
+                        {{ typeEntite }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Nom et prenoms du principal contact</label>
+                    <input type="text" formControlName="nomPrenomContactPrincipal" class="form-control"
+                      id="abbreviations" placeholder="Abbreviation" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Position du contact</label>
+                    <input type="text" formControlName="positionContact" class="form-control" id="abbreviations"
+                      placeholder="Abbreviation" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Numero de telephone du contact</label>
+                    <input type="text" formControlName="numeroContact" class="form-control" id="abbreviations"
+                      placeholder="Abbreviation" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Email du contact</label>
+                    <input type="text" formControlName="emailContact" class="form-control" id="abbreviations"
+                      placeholder="Abbreviation" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Capital social</label>
+                    <input type="text" formControlName="capitalSocial" class="form-control" id="abbreviations"
+                      placeholder="Abbreviation" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Assurance de l'entité</label>
+                    <input class="form-control" type="file" id="fichierDfe" title="fichierDfe"
+                      (change)="changeFile($event, 'assuranceEntite')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="abbreviations" class="form-label">Valeur nette comptable actuelle </label>
+                    <input type="text" formControlName="valeurNetteComptable" class="form-control" id="abbreviations"
+                      placeholder="Abbreviation" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="informationProduteurs" class="form-label">Informations producteurs/ fournisseurs
+                      (Nombres, contacts, localisation et volume contractuels)</label>
+                    <input class="form-control" type="informationProduteurs" id="informationProduteurs"
+                      title="informationProduteurs" (change)="changeFile($event, 'informationProduteurs')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="informationsClients" class="form-label">Informations clients/ fournisseurs (Nombres,
+                      contacts, localisation et volume contractuels) </label>
+                    <input class="form-control" type="informationsClients" id="informationsClients"
+                      title="informationsClients" (change)="changeFile($event, 'informationsClients')" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="modaliteDesPaiementAchatPRoducteurs" class="form-label">Modalite des paiement achat
+                      producteurs / Fournisseurs (Mode de reglement, detail de reglement)</label>
+                    <input type="text" formControlName="modaliteDesPaiementAchatPRoducteurs" class="form-control"
+                      id="modaliteDesPaiementAchatPRoducteurs" placeholder="modaliteDesPaiementAchatPRoducteurs" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="modaliteDesPaiementProduitsClients" class="form-label">Modalite des paiement produits
+                      clients (Mode de reglement, detail de reglement)</label>
+                    <input type="text" formControlName="modaliteDesPaiementProduitsClients" class="form-control"
+                      id="modaliteDesPaiementProduitsClients" placeholder="modaliteDesPaiementProduitsClients" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="tonnageTotalRealiseDerniereCampagne" class="form-label">Tonnage total realise sur la
+                      derniere campagne(indiquer le volume et periode de campagne)</label>
+                    <input type="text" formControlName="tonnageTotalRealiseDerniereCampagne" class="form-control"
+                      id="tonnageTotalRealiseDerniereCampagne" placeholder="tonnageTotalRealiseDerniereCampagne" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="informationsClients" class="form-label">
+                      Plan de campagne et tresorerie previsionnel
+                    </label>
+                    <input class="form-control" type="planDeCampagnePrevisionel" id="planDeCampagnePrevisionel"
+                      title="planDeCampagnePrevisionel" (change)="changeFile($event, 'planDeCampagnePrevisionel')" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="LettreIntentionContractAchat" class="form-label">Lettre d'intention et contracts
+                      achats / ventes (televerse les copies des lettres via 1 seul fichier)</label>
+                    <input class="form-control" type="LettreIntentionContractAchat" id="LettreIntentionContractAchat"
+                      title="LettreIntentionContractAchat"
+                      (change)="changeFile($event, 'LettreIntentionContractAchat')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="BonExecution" class="form-label">Bon d'execution ou des bon de commande (televerse les
+                      copies des lettres via 1 seul fichier)</label>
+                    <input class="form-control" type="BonExecution" id="BonExecution" title="BonExecution"
+                      (change)="changeFile($event, 'BonExecution')" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="typeDemandeCredit" class="form-label">Type de la demande de credit (credit fond de
+                      roulement)</label>
+                    <input type="text" formControlName="typeDemandeCredit" class="form-control" id="typeDemandeCredit"
+                      placeholder="typeDemandeCredit" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="MontantDemandeCredit" class="form-label">
+                      Montant de la demande de credit
+                    </label>
+                    <input type="text" formControlName="MontantDemandeCredit" class="form-control"
+                      id="MontantDemandeCredit" placeholder="MontantDemandeCredit" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="garantieFournies" class="form-label">Garanties / suretés fournies</label>
+                    <input type="text" formControlName="garantieFournies" class="form-control" id="garantieFournies"
+                      placeholder="garantieFournies" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="DureeFaciliteCredit" class="form-label">
+                      Durée de la facilité de credit
+                    </label>
+                    <input type="text" formControlName="DureeFaciliteCredit" class="form-control"
+                      id="DureeFaciliteCredit" placeholder="DureeFaciliteCredit" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="etatFinancierSurDeuxAns" class="form-label">Etats financiers sur 2 ans(televerser les
+                      2 derniers etats financier en 1 seul fichier)</label>
+                    <input class="form-control" type="etatFinancierSurDeuxAns" id="etatFinancierSurDeuxAns"
+                      title="etatFinancierSurDeuxAns" (change)="changeFile($event, 'etatFinancierSurDeuxAns')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="budgetPrevisionelCompteExploitationPrevisionel" class="form-label">Budget previsionnel
+                      ou compte d'exploitatoin pervisionnel</label>
+                    <input class="form-control" type="budgetPrevisionelCompteExploitationPrevisionel"
+                      id="budgetPrevisionelCompteExploitationPrevisionel"
+                      title="budgetPrevisionelCompteExploitationPrevisionel"
+                      (change)="changeFile($event, 'budgetPrevisionelCompteExploitationPrevisionel')" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="etatFinancierSurDeuxAns" class="form-label">Etats financiers sur 2 ans(televerser les
+                      2 derniers etats financier en 1 seul fichier)</label>
+                    <input class="form-control" type="etatFinancierSurDeuxAns" id="etatFinancierSurDeuxAns"
+                      title="etatFinancierSurDeuxAns" (change)="changeFile($event, 'etatFinancierSurDeuxAns')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="budgetPrevisionelCompteExploitationPrevisionel" class="form-label">Budget previsionnel
+                      ou compte d'exploitatoin pervisionnel</label>
+                    <input class="form-control" type="budgetPrevisionelCompteExploitationPrevisionel"
+                      id="budgetPrevisionelCompteExploitationPrevisionel"
+                      title="budgetPrevisionelCompteExploitationPrevisionel"
+                      (change)="changeFile($event, 'budgetPrevisionelCompteExploitationPrevisionel')" />
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="dispositionCompteBancaire" class="form-label">Etats financiers sur 2 ans(televerser
+                      les 2 derniers etats financier en 1 seul fichier)</label>
+                    <input class="form-control" type="dispositionCompteBancaire" id="dispositionCompteBancaire"
+                      title="dispositionCompteBancaire" (change)="changeFile($event, 'dispositionCompteBancaire')" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="informationEngagementOuPretsContracteActuel" class="form-label">Budget previsionnel ou
+                      compte d'exploitatoin pervisionnel</label>
+                    <input class="form-control" type="informationEngagementOuPretsContracteActuel"
+                      id="informationEngagementOuPretsContracteActuel"
+                      title="informationEngagementOuPretsContracteActuel"
+                      (change)="changeFile($event, 'informationEngagementOuPretsContracteActuel')" />
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">Avez-vous deja connu des contentieux /
+                    litiges dans les reglements de vos engagements ? Si oui, quelle a ete la situation a ces
+                    difficultes ?</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-light me-2" type="button">
+                  Enregister
+                </button>
+                <button class="btn btn-primary" type="button" awNextStep>
+                  Prochain
+                </button>
+              </div>
+            </aw-wizard-step>
+            <aw-wizard-step stepTitle="ETAPE 2">
+              <div formGroupName="step2Group">
+                <ngb-alert [dismissible]="false" [type]="'dark'">INDEPENDANCE FINANCIERE</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Capitaux propres N-1</label>
+                    <input type="text" formControlName="capitauxPropreNMoinUn" class="form-control"
+                      id="capitauxPropreNMoinUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Capitaux propres N</label>
+                    <input type="text" formControlName="capitauxPropreN" class="form-control" id="capitauxPropreN"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Dettes financières N-1</label>
+                    <input type="text" formControlName="detteFinanciereNMoinsUn" class="form-control"
+                      id="detteFinanciereNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Dettes financières N</label>
+                    <input type="text" formControlName="detteFinanciereN" class="form-control" id="detteFinanciereN"
+                      placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">LIQUIDITE GENERALE</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Actif circulant N-1</label>
+                    <input type="text" formControlName="actifCirculantNMoinsUn" class="form-control"
+                      id="actifCirculantNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Actif circulant N</label>
+                    <input type="text" formControlName="actifCirculantN" class="form-control" id="actifCirculantN"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Passif circulant N-1</label>
+                    <input type="text" formControlName="passifCirculantNMoinsUn" class="form-control"
+                      id="passifCirculantNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Passif circulant N</label>
+                    <input type="text" formControlName="passifCirculantN" class="form-control" id="passifCirculantN"
+                      placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">COUVERTURE DES EMPLOIS STABLE</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Capitaux permanents N-1</label>
+                    <input type="text" formControlName="capitauxPermanentNMoinsUn" class="form-control"
+                      id="capitauxPermanentNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Capitaux permanents N</label>
+                    <input type="text" formControlName="capitauxPermanentN" class="form-control" id="capitauxPermanentN"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Actif immobilisé N-1</label>
+                    <input type="text" formControlName="actifImmobiliseNMoinsUn" class="form-control"
+                      id="actifImmobiliseNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Actif immobilisé N</label>
+                    <input type="text" formControlName="actifImmobiliseN" class="form-control" id="actifImmobiliseN"
+                      placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">ACTIVITES</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Chiffre d’affaires HT N-1</label>
+                    <input type="text" formControlName="chiffreAffaireHTActiviteNMoinsUn" class="form-control"
+                      id="chiffreAffaireHTActiviteNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Chiffre d’affaires HT N</label>
+                    <input type="text" formControlName="chiffreAffaireHTActiviteN" class="form-control"
+                      id="chiffreAffaireHTActiviteN" placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">RENTABILITE NET</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Résultat net N-1</label>
+                    <input type="text" formControlName="resultatNetNMoinsUn" class="form-control"
+                      id="resultatNetNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Résultat net N</label>
+                    <input type="text" formControlName="resultatNetN" class="form-control" id="resultatNetN"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Chiffre d’affaires HT N-1</label>
+                    <input type="text" formControlName="chiffreAffaireHTRentabiliteNMoinsUn" class="form-control"
+                      id="chiffreAffaireHTRentabiliteNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Chiffre d’affaires HT N</label>
+                    <input type="text" formControlName="chiffreAffaireHTRentabiliteN" class="form-control"
+                      id="chiffreAffaireHTRentabiliteN" placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">MARGE COMMERCIALE</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Marge commerciale N-1</label>
+                    <input type="text" formControlName="margeComercialeNMoinsUn" class="form-control"
+                      id="margeComercialeNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Marge commerciale N</label>
+                    <input type="text" formControlName="margeComercialeN" class="form-control" id="margeComercialeN"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Chiffre d’affaires HT N-1</label>
+                    <input type="text" formControlName="chiffreAffaireHTMargeNMoinsUn" class="form-control"
+                      id="chiffreAffaireHTMargeNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Chiffre d’affaires HT N</label>
+                    <input type="text" formControlName="chiffreAffaireHTMargeN" class="form-control"
+                      id="chiffreAffaireHTMargeN" placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">DELAI DE ROTATION DES STOCKS</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Stock moyen sur l’exercice N-1</label>
+                    <input type="text" formControlName="stockMoyenExerciceNMoinsUn" class="form-control"
+                      id="stockMoyenExerciceNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Stock moyen sur l’exercice N</label>
+                    <input type="text" formControlName="stockMoyenExerciceN" class="form-control"
+                      id="stockMoyenExerciceN" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Achats consommés de l’exercice N-1</label>
+                    <input type="text" formControlName="achatConsommeExerciceNMoinsUn" class="form-control"
+                      id="achatConsommeExerciceNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Achats consommés de l’exercice N</label>
+                    <input type="text" formControlName="achatConsommeExerciceN" class="form-control"
+                      id="achatConsommeExerciceN" placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">DELAI CREDIT CLIENTS</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Créances clients N-1</label>
+                    <input type="text" formControlName="creanceClientNMoinsUn" class="form-control"
+                      id="creanceClientNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Créances clients N</label>
+                    <input type="text" formControlName="creanceClientN" class="form-control" id="creanceClientN"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Ventes TTC N-1</label>
+                    <input type="text" formControlName="venteTTCNMoinsUn" class="form-control" id="venteTTCNMoinsUn"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Ventes TTC N</label>
+                    <input type="text" formControlName="VenteTTCN" class="form-control" id="VenteTTCN"
+                      placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">DELAI CREDIT FOURNISSEURS</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Dettes fournisseurs N-1</label>
+                    <input type="text" formControlName="dettesFournisseursNMoins" class="form-control"
+                      id="dettesFournisseursNMoins" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Dettes fournisseurs N</label>
+                    <input type="text" formControlName="dettesFournisseursN" class="form-control"
+                      id="dettesFournisseursN" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Achats TTC N-1</label>
+                    <input type="text" formControlName="achatTTCNMoinsUn" class="form-control" id="achatTTCNMoinsUn"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Achats TTC N</label>
+                    <input type="text" formControlName="achatTTCN" class="form-control" id="achatTTCN"
+                      placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">CAPACITE DE REMBOURSEMENT</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Endettement net N-1</label>
+                    <input type="text" formControlName="endettementNMoinsUn" class="form-control"
+                      id="endettementNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Endettement net N</label>
+                    <input type="text" formControlName="endettementN" class="form-control" id="endettementN"
+                      placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Capacité d’autofinancement N-1</label>
+                    <input type="text" formControlName="capaciteAutotFinancementNMoinsUn" class="form-control"
+                      id="capaciteAutotFinancementNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Capacité d’autofinancement N</label>
+                    <input type="text" formControlName="capaciteAutotFinancementN" class="form-control"
+                      id="capaciteAutotFinancementN" placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+                <ngb-alert [dismissible]="false" [type]="'dark'">RENTABILITE DES CAPITAUX PROPRES</ngb-alert>
+                <div class="row mb-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Résultat net N-1</label>
+                    <input type="text" formControlName="resultatNetRentabiliteCapitauxPropreNMoinsUn"
+                      class="form-control" id="resultatNetRentabiliteCapitauxPropreNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Résultat net N</label>
+                    <input type="text" formControlName="resultatNetRentabiliteCapitauxPropreN" class="form-control"
+                      id="resultatNetRentabiliteCapitauxPropreN" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Capitaux propres N-1</label>
+                    <input type="text" formControlName="capitauxPropreRentabiliteNMoinsUn" class="form-control"
+                      id="capitauxPropreRentabiliteNMoinsUn" placeholder="xxxxxxx" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Capitaux propres N</label>
+                    <input type="text" formControlName="capitauxPropreRentabiliteN" class="form-control"
+                      id="capitauxPropreRentabiliteN" placeholder="xxxxxxx" />
+                  </div>
+
+                </div>
+              </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                  Revenir
+                </button>
+                <button class="btn btn-light me-2" type="button">
+                  Enregister
+                </button>
+                <button class="btn btn-primary" type="button" awNextStep>
+                  Prochain
+                </button>
+              </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="ETAPE 3">
+              <div formGroupName="step3Group">
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label class="form-label">FOND DE ROULEMENT</label>
+                    <input type="text" formControlName="fondRoulement" class="form-control" id="fondRoulement"
+                      placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label class="form-label">BENEFICES NON REPARTIS</label>
+                    <input type="text" formControlName="beneficeNonReparti" class="form-control" id="beneficeNonReparti"
+                      placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label class="form-label">BENEFICES NON REPARTIS</label>
+                    <input type="text" formControlName="beneficeNonReparti" class="form-control" id="beneficeNonReparti"
+                      placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label class="form-label">BENEFICES AVANT INTERET ET IMPOTS</label>
+                    <input type="text" formControlName="beneficeAvantInteretImpot" class="form-control"
+                      id="beneficeAvantInteretImpot" placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label class="form-label">VALEUR COMPTABLES DES CAPITAUX PROPRES</label>
+                    <input type="text" formControlName="valeurComptableCapitauxPropres" class="form-control"
+                      id="valeurComptableCapitauxPropres" placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label class="form-label">TOTAL DES ACTIFS</label>
+                    <input type="text" formControlName="totalActifs" class="form-control" id="totalActifs"
+                      placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label class="form-label">TOTAL DES PASSIFS</label>
+                    <input type="text" formControlName="totalPassifs" class="form-control" id="totalPassifs"
+                      placeholder="xxxxxxx" />
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                  <button class="btn btn-secondary me-2" type="button" awPreviousStep>
+                    Revenir
+                  </button>
+                  <button class="btn btn-success me-2" type="button">
+                    Enregister
+                  </button>
+                </div>
+              </div>
+            </aw-wizard-step>
+
+          </aw-wizard>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

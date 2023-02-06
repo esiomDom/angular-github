@@ -2,25 +2,49 @@ import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [
   {
-    label: 'Mes informations',
+    label: 'Accueil',
     icon: 'home',
     link: '/tableau-de-bord'
   },
   {
-    label: 'Mes banques',
+    label: 'Customer',
+    icon: 'users',
+    subMenus: [
+      {
+        subMenuItems: [
+          {
+            label: 'KYC',
+            link: '/tableau-de-bord/kyc'
+          },
+          {
+            label: 'KYB',
+            link: '/tableau-de-bord/kyb'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    label: 'Documents',
+    icon: 'folder',
+    link: '/documents'
+  },
+  {
+    label: 'Credit Scoring',
+    icon: 'cpu',
+    link: '/credit-scoring'
+  },
+  {
+    label: 'Banques',
     icon: 'dollar-sign',
     link: '#'
   },
   {
-    label: 'Mes prêts',
+    label: 'Prêts',
     icon: 'credit-card',
     link: '#'
   },
-  {
-    label: 'Mes documents',
-    icon: 'folder',
-    link: '#'
-  },
+
   // {
   //   label: 'Apps',
   //   icon: 'mail',

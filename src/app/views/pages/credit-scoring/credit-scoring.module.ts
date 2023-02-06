@@ -12,12 +12,18 @@ import { CustomFormsModule } from 'ngx-custom-validators';
 import { NgxMaskModule } from 'ngx-mask';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ViewScoringComponent } from './view-scoring/view-scoring.component';
+import { NewScoringComponent } from './new-scoring/new-scoring.component';
+import { ScoringListComponent } from './list-scoring/scoring-list.component';
 
 
 
 @NgModule({
   declarations: [
-    CreditScoringComponent
+    CreditScoringComponent,
+    ViewScoringComponent,
+    NewScoringComponent,
+    ScoringListComponent
   ],
   imports: [
     CommonModule,

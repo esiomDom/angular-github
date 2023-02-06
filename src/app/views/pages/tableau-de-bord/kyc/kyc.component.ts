@@ -1,7 +1,5 @@
 import urlList from 'src/app/core/utils/service-list';
 import { OnboardingApplicationService } from 'src/app/libs/onboarding-domain/application/onboarding-application.service';
-import { Commune, Ville } from './../../../libs/onboarding-domain/entities/localisation';
-import { FiliereIntervention, StatutJuridique, TypeEntite } from './../../../libs/onboarding-domain/entities/kyc';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
@@ -9,15 +7,17 @@ import { from } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { FiliereIntervention, StatutJuridique, TypeEntite } from 'src/app/libs/onboarding-domain/entities/kyc';
+import { Ville, Commune } from 'src/app/libs/onboarding-domain/entities/localisation';
 
 
 
 @Component({
-  selector: 'app-tableau-de-bord',
-  templateUrl: './tableau-de-bord.component.html',
-  styleUrls: ['./tableau-de-bord.component.scss']
+  selector: 'app-kyc',
+  templateUrl: './kyc.component.html',
+  styleUrls: ['./kyc.component.scss']
 })
-export class TableauDeBordComponent implements OnInit {
+export class KycComponent implements OnInit {
   step1Form: FormGroup;
   step2Form: FormGroup;
   isStep1FormSubmitted: Boolean;
@@ -39,17 +39,64 @@ export class TableauDeBordComponent implements OnInit {
   }
 
   async ngOnInit() {
+    // await this.initStep2Form()
+    await this.initStep1Form()
+    await this.addEntrepot()
+    await this.addActionnaires()
+    await this.addResponsable()
+    await this.getCurrentKyc();
   }
 
   openXlModal(content: TemplateRef<any>) {
     this.modalService.open(content, { size: 'xl' }).result.then((result) => {
       // console.log(result);
       if (this.accepted) {
-        this.goToKyc()
+        this.stepperIsActive = true
       }
     }).catch((res) => { });
   }
 
+
+
+  initStep1Form = () => {
+    this.step1Form = this.formBuilder.group({
+      step1Group: new FormGroup({
+        typeEntite: new FormControl(''),
+        denomination: new FormControl(''),
+        abreviation: new FormControl(''),
+        raisonSocial: new FormControl(''),
+        email: new FormControl(''),
+        telephone: new FormControl(''),
+        adressePostal: new FormControl(''),
+        villeRegionImplementation: new FormControl(''),
+        communeRegionImplementation: new FormControl(''),
+        detailRegionImplementation: new FormControl(''),
+        villeSiegeSocial: new FormControl(''),
+        communeSiegeSocial: new FormControl(''),
+        detailSiegeSocial: new FormControl(''),
+        siteInternet: new FormControl(''),
+        filiereIntervention: new FormControl([]),
+        dateCreationEntite: new FormControl(''),
+        statutJuridique: new FormControl(''),
+        capitalSocial: new FormControl(''),
+        entrepots: this.formBuilder.array([]),
+      }),
+      step2Group: new FormGroup({
+        numeroDfe: new FormControl(''),
+        fichierDfe: new FormControl(''),
+        numeroRccm: new FormControl(''),
+        fichierRccm: new FormControl(''),
+        fichierStatus: new FormControl(''),
+        licenseExploitation: new FormControl(''),
+        certificats: new FormControl(''),
+        fichierOrganigramme: new FormControl(''),
+      }),
+      step3Group: new FormGroup({
+        actionnaires: this.formBuilder.array([]),
+        responsables: this.formBuilder.array([])
+      })
+    })
+  }
 
   initStep2Form = () => {
     this.step2Form = this.formBuilder.group({
@@ -216,12 +263,14 @@ export class TableauDeBordComponent implements OnInit {
     if (savedkyc) {
       this.kycId = savedkyc.oid
       this.onboardingApplicationService.getCurrentKyc(this.kycId);
+
     } else {
       this.onboardingApplicationService.createUserKyc();
       this.getCurrentKyc()
     }
     this.onboardingApplicationService.kycData.subscribe(data => {
       this.setFormValue(data);
+      this.formCompleted = true;
     })
 
 
@@ -254,8 +303,8 @@ export class TableauDeBordComponent implements OnInit {
     alert('form submited')
   }
 
-  goToKyc() {
-    this.router.navigate(['/kyc']);
+  goToCreditScoring() {
+    this.router.navigate(['/credit-scoring']);
   }
 
 

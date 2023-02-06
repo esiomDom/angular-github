@@ -12,6 +12,34 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { NgxHorizontalTimelineModule } from 'ngx-horizontal-timeline';
+import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
+
+const dbConfig: DBConfig = {
+  name: 'MyDb',
+  version: 1,
+  objectStoresMeta: [{
+    store: 'scoring',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+      { name: 'noteCa', keypath: 'noteCa', options: { unique: false } },
+      { name: 'noteCroissanceCa', keypath: 'noteCroissanceCa', options: { unique: false } },
+      { name: 'noteRentabiliteCA', keypath: 'noteRentabiliteCA', options: { unique: false } },
+      { name: 'noteEbeCa', keypath: 'noteEbeCa', options: { unique: false } },
+      { name: 'noteCafgCa', keypath: 'noteCafgCa', options: { unique: false } },
+      { name: 'noteCapaciteRemboursement', keypath: 'noteCapaciteRemboursement', options: { unique: false } },
+      { name: 'noteCapitauxPropre', keypath: 'noteCapitauxPropre', options: { unique: false } },
+      { name: 'noteRentabilite', keypath: 'noteRentabilite', options: { unique: false } },
+      { name: 'noteFrasFin', keypath: 'noteFrasFin', options: { unique: false } },
+      { name: 'noteLiquiditeGeneral', keypath: 'noteLiquiditeGeneral', options: { unique: false } },
+      { name: 'noteMoyenneCa', keypath: 'noteMoyenneCa', options: { unique: false } },
+      { name: 'noteMoyenneEntreprise', keypath: 'noteMoyenneEntreprise', options: { unique: false } },
+      { name: 'notePondereeCa', keypath: 'notePondereeCa', options: { unique: false } },
+      { name: 'notePondereeEntreprise', keypath: 'notePondereeEntreprise', options: { unique: false } },
+      { name: 'noteFinale', keypath: 'noteFinale', options: { unique: false } },
+      { name: 'dateCreation', keypath: 'dateCreation', options: { unique: false } },
+    ]
+  }]
+};
 
 @NgModule({
   declarations: [
@@ -24,6 +52,7 @@ import { NgxHorizontalTimelineModule } from 'ngx-horizontal-timeline';
     BrowserAnimationsModule,
     NgxHorizontalTimelineModule,
     LayoutModule,
+    NgxIndexedDBModule.forRoot(dbConfig)
   ],
   providers: [
     AuthGuard,

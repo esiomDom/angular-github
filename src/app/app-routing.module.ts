@@ -60,7 +60,11 @@ const routes: Routes = [
       {
         path: 'credit-scoring',
         loadChildren: () => import('./views/pages/credit-scoring/credit-scoring.module').then(m => m.CreditScoringModule)
-      }
+      },
+      {
+        path: 'documents',
+        loadChildren: () => import('./views/pages/documents/documents-module.module').then(m => m.DocumentsModule)
+      },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

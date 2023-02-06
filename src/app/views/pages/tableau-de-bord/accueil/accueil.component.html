@@ -1,6 +1,122 @@
+<div class="row">
+  <div class="col-12 col-xl-12 stretch-card">
+    <div class="row flex-grow-1">
+      <div class="col-md-3 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <img class="img-xs rounded-circle" src="https://via.placeholder.com/37x37" alt="" />
+                <div class="ms-2">
+                  <h3>GIE HEVEA</h3>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="x-13 fw-bolder">
+                <i class="feather icon-at-sign icon-md"></i> gie-hevea@gmail.com
+              </p>
+            </div>
+            <div class="mt-3">
+              <p class="x-13 fw-bolder">
+                <i class="feather icon-phone icon-md"></i> 07 07 07 07 07
+              </p>
+            </div>
+            <div class="mt-3">
+              <p class="x-13 fw-bolder">Id: SK0234NI</p>
+            </div>
+          </div>
+          <div class="card-footer d-grid gap-2">
+            <button  (click)="openXlModal(xlModal)"
+              [class]="'btn btn-success'">Renseigner mes
+              infos</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h3 class="mb-0">Bienvenue dans votre espace client</h3>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <ul>
+                  <li class="mt-3">
+                    la plateforme Afincap est une plateforme digitale donnant accès à des services financiers numériques
+                    tout en vous permettant de pouvoir bénéficier de services adaptés à vos besoins
+                  </li>
+                  <li class="mt-3">
+                    Pour tout contrat de prêt, vous vous devez de créer un compte chez nos partenaires bancaires.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- row -->
 
+<ng-template #xlModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Politique d’utilisation</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <h4 class="text-center mb-3">Avant de commencer le renseignement de vos données, nous vous prions de prendre
+      connaissance
+      de la politique
+      d’utilisation de la plateforme</h4>
+    <pdf-viewer [src]="'assets/pdf/disclaimer.pdf'" [original-size]="true" style="width: 100%; height: 600px">
+    </pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close(accepted = false)">Refuser</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close(accepted = true)">Accepter</button>
+  </div>
+</ng-template>
 
-<router-outlet></router-outlet>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Notre processus en quelques étapes</h6>
+        <div id="content">
+          <ul class="timeline">
+            <li class="event">
+              <h3 class="title">ETAPE 1</h3>
+              <p>
+                Créez votre profil sur la plateforme en vous inscrivant<i>Si vous voyez ce
+                message c'est que c'est fait</i>
+              </p>
+            </li>
+            <li class="event">
+              <h3 class="title">ETAPE 2
+              </h3>
+              <p>
+                Une fois inscrit, renseignez les informations de votre entreprise (Formulaire KYC).
+              </p>
+            </li>
+            <li class="event">
+              <h3 class="title">ETAPE 3</h3>
+              <p>Renseignez les informations sur votre activité (KYB) et vos données financières</p>
+            </li>
+            <li class="event">
+              <h3 class="title">ETAPE 4</h3>
+              <p>
+                Vous êtes aptes à bénéficier des services de la plateforme (Ouverture de compte, Scoring, Demande de prêt, Demande
+                d'assurance, ...).
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
