@@ -8,6 +8,6 @@ COPY nginx.conf /etc/nginx/nginx.conf
 USER nginx
 
 
-FROM nginx:alpine
+# FROM nginx:alpine
 
-COPY ./dist/. /usr/share/nginx/html
+# COPY ./dist/. /usr/share/nginx/html
