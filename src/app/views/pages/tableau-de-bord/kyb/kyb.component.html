@@ -5,7 +5,7 @@
         <h3 class="mb-3 card-title">ETAPE 3 :Remplissez le formulaire de demande de prêt</h3>
         <form (ngSubmit)="onSubmit()" [formGroup]="step2Form">
           <aw-wizard>
-            <aw-wizard-step stepTitle="Etape 1">
+            <aw-wizard-step stepTitle="Page 1">
               <div formGroupName="step1Group">
                 <div class="row mb-3">
                   <div class="col-md-6">
@@ -93,17 +93,17 @@
                 </div>
                 <div class="row mb-3">
                   <div class="col-md-6">
-                    <label for="abbreviations" class="form-label">INFORMATION PRODUCTEURS/FOURNISSEURS (Nombres,
+                    <label for="abbreviations" class="form-label">INFORMATION PRODUCTEURS/FOURNISSEURS  </label>
+                    <input class="form-control" type="file" id="informationsProducteurs" title="(Nombres,
                       contacts, localisation,
                       volumes contractuels, mode de reglement, délai de
-                      reglement) </label>
-                    <input class="form-control" type="file" id="informationsProducteurs" title="informationsProducteurs"
+                      reglement)"
                       (change)="changeFile($event, 'informationsProducteurs')" />
                   </div>
                   <div class="col-md-6">
-                    <label for="abbreviations" class="form-label">INFORMATION CLIENTS (Liste, contacts, localisation,
-                      volumes contractuels, mode de reglement, délai de reglement) </label>
-                    <input class="form-control" type="file" id="informationsClients" title="informationsClients"
+                    <label for="abbreviations" class="form-label">INFORMATION CLIENTS  </label>
+                    <input class="form-control" type="file" id="informationsClients" title="(Liste, contacts, localisation,
+                      volumes contractuels, mode de reglement, délai de reglement)"
                       (change)="changeFile($event, 'informationsClients')" />
                   </div>
                 </div>
@@ -162,11 +162,11 @@
 
                   <div class="col-md-12">
                     <label for="engagementPret" class="form-label">AVEZ-VOUS DÉJÀ CONNU DES CONTENTIEUX/LITIGES DANS LE REGLEMENT DE VOS ENGAGEMENTS  ?
-                    Si oui :
+                   </label>
+                    <textarea class="form-control" id="contentieuxReglementEngagement" rows="5" title=" Si oui :
                     Quelle banque ?
                     Quel montant ?
-                    Situation actuelle ? Réglé / En cours de règlement / Pas réglé</label>
-                    <textarea class="form-control" id="contentieuxReglementEngagement" rows="5"></textarea>
+                    Situation actuelle ? Réglé / En cours de règlement / Pas réglé"></textarea>
                   </div>
 
                 </div>
@@ -181,7 +181,7 @@
                 </button>
               </div>
             </aw-wizard-step>
-            <aw-wizard-step stepTitle="Page 4">
+            <aw-wizard-step stepTitle="Page 2">
               <div class=" text-center">
                 <i data-feather="check-circle" appFeatherIcon class="text-success mt-4 mb-2 icon-xxl"></i>
                 <h3 class="text-muted mb-3">Félicitations !</h3>
