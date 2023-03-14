@@ -7,7 +7,7 @@ export const MENU: MenuItem[] = [
     link: '/tableau-de-bord'
   },
   {
-    label: 'Customer',
+    label: 'Clients',
     icon: 'users',
     subMenus: [
       {
@@ -30,20 +30,42 @@ export const MENU: MenuItem[] = [
     link: '/documents'
   },
   {
-    label: 'Credit Scoring',
-    icon: 'cpu',
-    link: '/credit-scoring'
-  },
-  {
-    label: 'Banques',
+    label: 'Services',
     icon: 'dollar-sign',
-    link: '#'
+    subMenus: [
+      {
+        subMenuItems: [
+          {
+            label: 'Credit Scoring',
+            link: '/credit-scoring'
+          },
+          {
+            label: 'Banques',
+            link: '#'
+          },
+          {
+            label: 'Prêts',
+            link: '#'
+          }
+        ]
+      }
+    ]
   },
-  {
-    label: 'Prêts',
-    icon: 'credit-card',
-    link: '#'
-  },
+  // {
+  //   label: 'Credit Scoring',
+  //   icon: 'cpu',
+  //   link: '/credit-scoring'
+  // },
+  // {
+  //   label: 'Banques',
+  //   icon: 'dollar-sign',
+  //   link: '#'
+  // },
+  // {
+  //   label: 'Prêts',
+  //   icon: 'credit-card',
+  //   link: '#'
+  // },
 
   // {
   //   label: 'Apps',

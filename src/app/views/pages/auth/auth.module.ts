@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
 import { OnboardingDomainModule } from 'src/app/libs/onboarding-domain/onboarding-domain.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     OnboardingDomainModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PdfViewerModule
   ]
 })
 export class AuthModule { }

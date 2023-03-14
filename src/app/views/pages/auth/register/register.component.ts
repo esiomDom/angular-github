@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OnboardingApplicationService } from 'src/app/libs/onboarding-domain/application/onboarding-application.service';
 
 @Component({
@@ -8,8 +9,9 @@ import { OnboardingApplicationService } from 'src/app/libs/onboarding-domain/app
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  accepted: boolean = false;
 
-  constructor(private router: Router, private onboardingApplicationService: OnboardingApplicationService) { }
+  constructor(private router: Router, private onboardingApplicationService: OnboardingApplicationService, private modalService: NgbModal,) { }
 
   ngOnInit(): void {
   }
@@ -19,5 +21,20 @@ export class RegisterComponent implements OnInit {
     this.onboardingApplicationService.createUserKyc();
 
   }
+
+  openXlModal(content: TemplateRef<any>) {
+    this.modalService.open(content, { size: 'xl' }).result.then((result) => {
+      // console.log(result);
+      if (this.accepted) {
+        // this.goToKyc()
+      }
+    }).catch((res) => { });
+  }
+
+
+  goToKyc() {
+    this.router.navigate(['/tableau-de-bord/kyc']);
+  }
+
 
 }

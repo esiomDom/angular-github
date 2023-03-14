@@ -28,7 +28,7 @@
         placeholder="Password">
     </div>
     <div class="form-check mb-3">
-      <input type="checkbox" class="form-check-input" id="authCheck">
+      <input type="checkbox" class="form-check-input" id="authCheck" (click)="openXlModal(xlModal)">
       <label class="form-check-label" for="authCheck">
         J'accepte <a routerLink=".">les termes & conditions d'utilisation</a>
       </label>
@@ -44,3 +44,22 @@
         class="text-primary">Connectez-vous</span></a>
   </form>
 </div>
+
+<ng-template #xlModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Politique d’utilisation</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <h4 class="text-center mb-3">Avant de commencer le renseignement de vos données, nous vous prions de prendre
+      connaissance
+      de la politique
+      d’utilisation de la plateforme</h4>
+    <pdf-viewer [src]="'assets/pdf/disclaimer.pdf'" [original-size]="true" style="width: 100%; height: 600px">
+    </pdf-viewer>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close(accepted = false)">Refuser</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close(accepted = true)">Accepter</button>
+  </div>
+</ng-template>
